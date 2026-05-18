@@ -13,7 +13,7 @@
 
 ## 📌 Project Overview
 
-This is a production-grade test automation framework built as part of the **Wipro Capstone Project** for Enterprise Quality Engineering. It combines advanced Playwright browser automation with **Generative AI tooling** (GitHub Copilot + MCP) to deliver a scalable, maintainable, and intelligent QA ecosystem.
+This is a production-grade test automation framework built as part of the **Wipro Capstone Project**. It combines advanced Playwright browser automation with **Generative AI tooling** (GitHub Copilot + MCP) to deliver a scalable, maintainable, and intelligent QA ecosystem.
 
 | Detail | Info |
 |--------|------|
