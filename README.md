@@ -1,5 +1,5 @@
 ﻿# WIPRO-TRAINING-CAPSTONE-PROJECT
-# 🎭 Wipro Capstone Project 
+#  Wipro Capstone Project 
 
 ![Playwright](https://img.shields.io/badge/Playwright-v1.4x+-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-Node.js-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -11,21 +11,21 @@
 
 ---
 
-## 📌 Project Overview
+##  Project Overview
 
 This is a production-grade test automation framework built as part of the **Wipro Capstone Project**. It combines advanced Playwright browser automation with **Generative AI tooling** (GitHub Copilot + MCP) to deliver a scalable, maintainable, and intelligent QA ecosystem.
 
 | Detail | Info |
 |--------|------|
-| 🌐 **Target Site** | [Practice Software Testing](https://practicesoftwaretesting.com) |
-| 🔌 **API** | [Swagger REST API](https://api.practicesoftwaretesting.com/api/documentation) — Free |
-| 🧪 **Framework** | Playwright v1.4x+ |
-| 💻 **Language** | JavaScript (Node.js) |
-| 🏗️ **Pattern** | Page Object Model (POM) |
-| 📊 **Reports** | Allure Report + Playwright HTML |
-| 🤖 **AI Tools** | GitHub Copilot + Model Context Protocol (MCP) |
-| ⚙️ **CI/CD** | Jenkins |
-| 📦 **Total Tests** | 120+ (8 Services × 15 Cases) |
+|  **Target Site** | [Practice Software Testing](https://practicesoftwaretesting.com) |
+|  **API** | [Swagger REST API](https://api.practicesoftwaretesting.com/api/documentation) — Free |
+|  **Framework** | Playwright v1.4x+ |
+|  **Language** | JavaScript (Node.js) |
+|  **Pattern** | Page Object Model (POM) |
+|  **Reports** | Allure Report + Playwright HTML |
+|  **AI Tools** | GitHub Copilot + Model Context Protocol (MCP) |
+|  **CI/CD** | Jenkins |
+|  **Total Tests** | 120+ (8 Services × 15 Cases) |
 
 ---
 
@@ -63,23 +63,23 @@ project/
 
 ---
 
-## 🧩 Services & Test Coverage
+##  Services & Test Coverage
 
 | # | Service | Test Cases | Coverage |
 |---|---------|-----------|----------|
-| 1 | 🔐 Authentication | 15 | Login, logout, register, session, password reset, token expiry |
-| 2 | 🛍️ Product Catalog | 15 | Search, filter, sort, product detail, pagination, out-of-stock |
-| 3 | 🛒 Cart | 15 | Add/remove, quantity update, price calc, coupon, persistence |
-| 4 | 👤 User Profile | 15 | Update info, password change, order history, validations |
-| 5 | 📦 Address & Shipping | 15 | Add/edit/delete address, shipping methods, default address |
-| 6 | 💳 Payment & Checkout | 15 | Full checkout flow, order confirmation, invalid card handling |
-| 7 | 🎧 Customer Support | 15 | Contact form, field validation, FAQ, category dropdown |
-| 8 | 🔌 API (Internal) | 15 | REST endpoints, schema validation, auth, error codes |
+| 1 |  Authentication | 15 | Login, logout, register, session, password reset, token expiry |
+| 2 |  Product Catalog | 15 | Search, filter, sort, product detail, pagination, out-of-stock |
+| 3 |  Cart | 15 | Add/remove, quantity update, price calc, coupon, persistence |
+| 4 |  User Profile | 15 | Update info, password change, order history, validations |
+| 5 |  Address & Shipping | 15 | Add/edit/delete address, shipping methods, default address |
+| 6 |  Payment & Checkout | 15 | Full checkout flow, order confirmation, invalid card handling |
+| 7 |  Customer Support | 15 | Contact form, field validation, FAQ, category dropdown |
+| 8 |  API (Internal) | 15 | REST endpoints, schema validation, auth, error codes |
 | | **Total** | **120+** | |
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js v18+
@@ -114,7 +114,7 @@ API_URL=https://api.practicesoftwaretesting.com
 
 ---
 
-## ▶️ Running Tests
+##  Running Tests
 
 ```bash
 # Run all tests (headless)
@@ -138,7 +138,7 @@ npm run test:report
 
 ---
 
-## 📊 Reports
+##  Reports
 
 ### Allure Report
 ```bash
@@ -154,7 +154,7 @@ npx playwright show-report
 
 ---
 
-## 🏗️ Implementation Milestones
+##  Implementation Milestones
 
 | Milestone | Title | Key Deliverables |
 |-----------|-------|-----------------|
@@ -167,7 +167,7 @@ npx playwright show-report
 
 ---
 
-## 🤖 AI & MCP Integration
+##  AI & MCP Integration
 
 - **GitHub Copilot** — Used inside VS Code to accelerate Page Object generation, locator refactoring, and test boilerplate creation
 - **Model Context Protocol (MCP)** — MCP host configured to expose DOM state and Playwright runtime to an LLM engine for autonomous test generation
@@ -175,7 +175,7 @@ npx playwright show-report
 
 ---
 
-## ⚙️ CI/CD Pipeline
+##  CI/CD Pipeline
 
 Jenkins is configured for both local and headless execution:
 
@@ -189,7 +189,7 @@ Pipeline → Install Dependencies → Run Tests → Generate Allure Report → A
 
 ---
 
-## ✅ Capstone Checklist
+##  Capstone Checklist
 
 - [x] Data-driven via external JSON and `.env` — zero hardcoded credentials
 - [x] Every test executes independently — parallel-safe
@@ -203,7 +203,7 @@ Pipeline → Install Dependencies → Run Tests → Generate Allure Report → A
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Krishna**
 
