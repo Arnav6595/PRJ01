@@ -1,0 +1,7 @@
+[
+  {
+    "testName": "Valid Search - Pliers",
+    "searchQuery": "Pliers",
+    "expectedProductName": "Combination Pliers"
+  }
+]

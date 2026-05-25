@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:headed": "playwright test --headed"
+    "test:headed": "playwright test --headed",
+    "test:report": "allure serve allure-results"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0"

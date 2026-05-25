@@ -1,9 +1,8 @@
 [
   {
-    "testName": "Valid credentials",
-    "email": "admin@practicesoftwaretesting.com",
-    "password": "welcome01",
-    "expectSuccess": true
+    "testName": "Valid Customer Account",
+    "email": "krishna.capstone.test@practicesoftwaretesting.com",
+    "password": "SecurePassword123!@123456789"
   },
   {
     "testName": "Invalid password",

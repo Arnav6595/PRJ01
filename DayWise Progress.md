@@ -128,3 +128,53 @@ This guarantees a string is always passed to the validation method, satisfying t
 1. Map locators for `RegisterPage.js`.
 2. Automate the registration flow — checkboxes, radio buttons, and native `<select>` dropdowns.
 3. Finalize Service 1 and begin Milestone 3 — Advanced Async UI.
+
+
+# **Date:**25 May 2026 Progress
+
+**Project:** Wipro Capstone · automationexercise.com  
+**Stack:** Playwright v1.4x+ · JavaScript / Node.js · POM Architecture · Data-Driven  
+**Date:** May 25, 2025
+
+---
+
+
+
+### 1. Framework Architecture
+Built `BasePage` and custom Playwright fixtures to automatically route tests through the application.
+
+### 2. Service 1 — Authentication
+Mapped `LoginPage` and `RegisterPage`, and successfully executed data-driven login and registration tests.
+
+### 3. Service 2 — Product Catalog
+Built the `HomePage` map, navigated dynamic elements, and validated product searches end-to-end.
+
+### 4. Service 3 — Cart State
+Built `ProductPage`, conquered the **center-pixel click bug**, and validated dynamic UI state changes (the cart badge).
+
+### 5. Data-Driven Engine
+Completely separated test logic from data by creating:
+- `users.json`
+- `products.json`
+- `profile.json`
+
+### 6. CodeGen Pipeline
+Established a rapid workflow using Playwright CodeGen to instantly harvest locators for upcoming milestones.
+
+---
+
+## ✅ Services Covered Today
+
+| # | Service | Page Objects | Status |
+|---|---------|-------------|--------|
+| 1 | Authentication | `LoginPage`, `RegisterPage` | ✅ Done |
+| 2 | Product Catalog | `HomePage` | ✅ Done |
+| 3 | Cart State | `ProductPage` | ✅ Done |
+
+---
+
+## ➡️ Up Next
+
+- Service 4 and beyond
+- Expand data files for remaining services
+- Continue CodeGen locator harvesting for upcoming milestones

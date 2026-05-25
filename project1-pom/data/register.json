@@ -1,0 +1,20 @@
+[
+  {
+    "testName": "Valid New User Registration",
+    "userData": {
+      "firstName": "Krishna",
+      "lastName": "Test",
+      "dob": "2000-05-15",
+      "address": "Civil Lines",
+      "houseNumber": "42",
+      "postCode": "211001",
+      "city": "Prayagraj",
+      "state": "Uttar Pradesh",
+      "country": "IN",
+      "phone": "9876543210",
+      "email": "krishna.capstone.test@practicesoftwaretesting.com",
+      "password": "SecurePassword123!@123456789"
+    },
+    "expectSuccess": true
+  }
+]

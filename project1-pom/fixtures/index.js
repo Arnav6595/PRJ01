@@ -1,11 +1,18 @@
-// @ts-check
+
 import { test as baseTest, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage.js';
-
+import { RegisterPage } from '../pages/RegisterPage.js';
+import { HomePage } from '../pages/HomePage.js'; // <-- 1. Added import
+import { ProductPage } from '../pages/ProductPage.js';
+import {ProfilePage} from '../pages/ProfilePage.js';
 /**
  * @typedef {object} MyFixtures
  * @property {import('@playwright/test').Page} preparedPage
  * @property {LoginPage} loginPage
+ * @property {RegisterPage} registerPage 
+ * @property {HomePage} homePage // <-- 2. Added property for VS Code autocomplete
+ * @property {ProductPage} productPage
+ * @property {ProfilePage} profilePage
  */
 
 /** @type {import('@playwright/test').TestType<import('@playwright/test').PlaywrightTestArgs & import('@playwright/test').PlaywrightTestOptions & MyFixtures, import('@playwright/test').PlaywrightWorkerArgs & import('@playwright/test').PlaywrightWorkerOptions>} */
@@ -13,23 +20,38 @@ export const test = baseTest.extend({
     
     // 1. Instructor Concept: Custom preparedPage fixture
     preparedPage: async ({ page }, use) => {
-        // Go to the base URL automatically
         await page.goto('/');
-        
-        // Imagine handling a generic popup here if the site had one
-        // await page.getByRole('button', { name: 'Accept Cookies' }).click();
-        
-        // Pass the ready page to the test
         await use(page);
     },
 
-    // 2. We can even create a fixture specifically for the LoginPage
+    // 2. Fixture for the LoginPage
     loginPage: async ({ preparedPage }, use) => {
         const loginPage = new LoginPage(preparedPage);
         await loginPage.goTo();
-        
-        // Pass the instantiated POM to the test
         await use(loginPage);
+    },
+
+    // 3. Fixture for the RegisterPage
+    registerPage: async ({ preparedPage }, use) => {
+        const registerPage = new RegisterPage(preparedPage);
+        await registerPage.goTo();
+        await use(registerPage);
+    },
+
+    // 4. New fixture specifically for the HomePage (Service 2)
+    homePage: async ({ preparedPage }, use) => {
+        const homePage = new HomePage(preparedPage);
+        await homePage.goTo();
+        await use(homePage);
+    },
+    // <-- ADD THIS NEW FIXTURE
+    productPage: async ({ preparedPage }, use) => {
+        const productPage = new ProductPage(preparedPage);
+        await use(productPage);
+    },
+    profilePage: async ({ preparedPage }, use) => {
+        const profilePage = new ProfilePage(preparedPage);
+        await use(profilePage);
     }
 });
 
