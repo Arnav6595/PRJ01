@@ -12,7 +12,7 @@
 # Error details
 
 ```
-Tearing down "context" exceeded the test timeout of 30000ms.
+Test timeout of 30000ms exceeded.
 ```
 
 # Page snapshot
@@ -61,46 +61,56 @@ Tearing down "context" exceeded the test timeout of 30000ms.
         - generic [ref=e59] [cursor=pointer]:
           - generic [ref=e60]: Cart
           - generic [ref=e61]: "1"
-      - listitem [ref=e62]:
-        - generic [ref=e63] [cursor=pointer]:
-          - generic [ref=e64]: Sign in
-          - generic [ref=e65]: "2"
-      - listitem [ref=e66]:
-        - generic [ref=e67] [cursor=pointer]:
-          - generic [ref=e68]: Billing Address
-          - generic [ref=e69]: "3"
+      - listitem:
+        - generic:
+          - generic: Sign in
+          - generic: "2"
+      - listitem:
+        - generic:
+          - generic: Billing Address
+          - generic: "3"
       - listitem:
         - generic:
           - generic: Payment
           - generic: "4"
-    - generic [ref=e75]:
-      - heading "Payment" [level=3] [ref=e76]
-      - generic [ref=e77]:
+    - generic [ref=e68]:
+      - tablist [ref=e70]:
+        - listitem [ref=e71]:
+          - tab "Sign in" [ref=e72] [cursor=pointer]
+        - listitem [ref=e73]:
+          - tab "Continue as Guest" [ref=e74] [cursor=pointer]
+      - tabpanel [ref=e76]:
+        - heading "Login" [level=3] [ref=e77]
         - generic [ref=e78]:
-          - generic [ref=e79]: Payment Method
-          - combobox "Payment Method" [ref=e80]:
-            - option "Choose your payment method" [disabled]
-            - option "Bank Transfer"
-            - option "Cash on Delivery" [selected]
-            - option "Credit Card"
-            - option "Buy Now Pay Later"
-            - option "Gift Card"
-        - generic [ref=e82]: Payment was successful
-      - button "Confirm" [active] [ref=e84] [cursor=pointer]
-  - paragraph [ref=e87]:
+          - generic [ref=e79]:
+            - generic [ref=e80]: Email address *
+            - textbox "Email address *" [ref=e81]:
+              - /placeholder: Your email
+          - generic [ref=e82]:
+            - generic [ref=e83]: Password *
+            - textbox "Password *" [ref=e84]:
+              - /placeholder: Your password
+          - button "Login" [ref=e86] [cursor=pointer]
+          - paragraph [ref=e88]:
+            - text: Not yet an account?
+            - link "Register your account" [ref=e89] [cursor=pointer]:
+              - /url: /auth/register
+            - link "Forgot your Password?" [ref=e90] [cursor=pointer]:
+              - /url: /auth/forgot-password
+  - paragraph [ref=e93]:
     - text: This is a DEMO application (
-    - link "GitHub repo" [ref=e88] [cursor=pointer]:
+    - link "GitHub repo" [ref=e94] [cursor=pointer]:
       - /url: https://github.com/testsmith-io/practice-software-testing
     - text: ), used for software testing training purpose. |
-    - link "Privacy Policy" [ref=e89] [cursor=pointer]:
+    - link "Privacy Policy" [ref=e95] [cursor=pointer]:
       - /url: /privacy
     - text: "| Banner photo by"
-    - link "Barn Images" [ref=e90] [cursor=pointer]:
+    - link "Barn Images" [ref=e96] [cursor=pointer]:
       - /url: https://unsplash.com/@barnimages
     - text: "on"
-    - link "Unsplash" [ref=e91] [cursor=pointer]:
+    - link "Unsplash" [ref=e97] [cursor=pointer]:
       - /url: https://unsplash.com/photos/t5YUoHW6zRo
     - text: .
-  - button "Open chat" [ref=e93] [cursor=pointer]:
-    - img [ref=e94]
+  - button "Open chat" [ref=e99] [cursor=pointer]:
+    - img [ref=e100]
 ```

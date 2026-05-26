@@ -12,7 +12,7 @@
 # Error details
 
 ```
-Test timeout of 30000ms exceeded.
+Tearing down "context" exceeded the test timeout of 30000ms.
 ```
 
 # Page snapshot
@@ -48,44 +48,69 @@ Test timeout of 30000ms exceeded.
               - link "Sign in" [ref=e41] [cursor=pointer]:
                 - /url: /auth/login
             - menuitem "cart" [ref=e42]:
-              - link "cart" [active] [ref=e43] [cursor=pointer]:
+              - link "cart" [ref=e43] [cursor=pointer]:
                 - /url: /checkout
                 - img [ref=e45]
                 - generic [ref=e47]: "1"
           - button "Select language" [ref=e49] [cursor=pointer]:
             - img [ref=e51]
             - text: EN
-  - list [ref=e57]:
-    - listitem:
-      - generic:
-        - generic: Cart
-        - generic: "1"
-    - listitem:
-      - generic:
-        - generic: Sign in
-        - generic: "2"
-    - listitem:
-      - generic:
-        - generic: Billing Address
-        - generic: "3"
-    - listitem:
-      - generic:
-        - generic: Payment
-        - generic: "4"
-  - paragraph [ref=e60]:
+  - generic [ref=e55]:
+    - list [ref=e57]:
+      - listitem [ref=e58]:
+        - generic [ref=e59] [cursor=pointer]:
+          - generic [ref=e60]: Cart
+          - generic [ref=e61]: "1"
+      - listitem:
+        - generic:
+          - generic: Sign in
+          - generic: "2"
+      - listitem:
+        - generic:
+          - generic: Billing Address
+          - generic: "3"
+      - listitem:
+        - generic:
+          - generic: Payment
+          - generic: "4"
+    - generic [ref=e68]:
+      - tablist [ref=e70]:
+        - tab "Sign in" [ref=e71] [cursor=pointer]
+        - tab "Continue as Guest" [selected] [ref=e72] [cursor=pointer]
+      - tabpanel [ref=e74]:
+        - heading "Continue as Guest" [level=3] [ref=e75]
+        - paragraph [ref=e76]: Checkout without creating an account
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: Email address *
+            - textbox "Email address *" [ref=e80]:
+              - /placeholder: Your email
+          - generic [ref=e82]: Email is required
+          - generic [ref=e83]:
+            - generic [ref=e84]: First name *
+            - textbox "First name *" [ref=e85]:
+              - /placeholder: Your first name
+          - generic [ref=e87]: First name is required
+          - generic [ref=e88]:
+            - generic [ref=e89]: Last name *
+            - textbox "Last name *" [ref=e90]:
+              - /placeholder: Your last name
+          - generic [ref=e92]: Last name is required
+          - button "Continue as Guest" [active] [ref=e94] [cursor=pointer]
+  - paragraph [ref=e97]:
     - text: This is a DEMO application (
-    - link "GitHub repo" [ref=e61] [cursor=pointer]:
+    - link "GitHub repo" [ref=e98] [cursor=pointer]:
       - /url: https://github.com/testsmith-io/practice-software-testing
     - text: ), used for software testing training purpose. |
-    - link "Privacy Policy" [ref=e62] [cursor=pointer]:
+    - link "Privacy Policy" [ref=e99] [cursor=pointer]:
       - /url: /privacy
     - text: "| Banner photo by"
-    - link "Barn Images" [ref=e63] [cursor=pointer]:
+    - link "Barn Images" [ref=e100] [cursor=pointer]:
       - /url: https://unsplash.com/@barnimages
     - text: "on"
-    - link "Unsplash" [ref=e64] [cursor=pointer]:
+    - link "Unsplash" [ref=e101] [cursor=pointer]:
       - /url: https://unsplash.com/photos/t5YUoHW6zRo
     - text: .
-  - button "Open chat" [ref=e66] [cursor=pointer]:
-    - img [ref=e67]
+  - button "Open chat" [ref=e103] [cursor=pointer]:
+    - img [ref=e104]
 ```
