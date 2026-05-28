@@ -33,6 +33,7 @@ setup('authenticate via API to bypass Cloudflare', async ({ page, request }) => 
 
     await page.evaluate((jwt) => {
         localStorage.setItem('access_token', jwt);
+        localStorage.setItem('token_type', 'bearer');
     }, token);
 
     await page.waitForTimeout(500);
