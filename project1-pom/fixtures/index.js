@@ -10,7 +10,6 @@ import { ContactPage }  from '../pages/ContactPage.js';
 
 /**
  * @typedef {object} MyFixtures
- * @property {import('@playwright/test').Page} preparedPage
  * @property {LoginPage}    loginPage
  * @property {RegisterPage} registerPage
  * @property {HomePage}     homePage
@@ -20,60 +19,31 @@ import { ContactPage }  from '../pages/ContactPage.js';
  * @property {AccountPage}  accountPage
  * @property {ContactPage}  contactPage
  */
-
-/** @type {import('@playwright/test').TestType<import('@playwright/test').PlaywrightTestArgs & import('@playwright/test').PlaywrightTestOptions & MyFixtures, import('@playwright/test').PlaywrightWorkerArgs & import('@playwright/test').PlaywrightWorkerOptions>} */
 export const test = baseTest.extend({
-
-    // ── Base: navigates to / before each test ─────────────────────────────
-    preparedPage: async ({ page }, use) => {
-        await page.goto('/');
-        await use(page);
+    // Just instantiate the classes — let each test file handle its own navigation.
+    loginPage: async ({ page }, use) => {
+        await use(new LoginPage(page));
     },
-
-    // ── Auth fixtures ──────────────────────────────────────────────────────
-    loginPage: async ({ preparedPage }, use) => {
-        const loginPage = new LoginPage(preparedPage);
-        await loginPage.goTo();
-        await use(loginPage);
+    registerPage: async ({ page }, use) => {
+        await use(new RegisterPage(page));
     },
-
-    registerPage: async ({ preparedPage }, use) => {
-        const registerPage = new RegisterPage(preparedPage);
-        await registerPage.goTo();
-        await use(registerPage);
+    homePage: async ({ page }, use) => {
+        await use(new HomePage(page));
     },
-
-    // ── Page fixtures ──────────────────────────────────────────────────────
-    homePage: async ({ preparedPage }, use) => {
-        const homePage = new HomePage(preparedPage);
-        await homePage.goTo();
-        await use(homePage);
+    productPage: async ({ page }, use) => {
+        await use(new ProductPage(page));
     },
-
-    productPage: async ({ preparedPage }, use) => {
-        const productPage = new ProductPage(preparedPage);
-        await use(productPage);
+    profilePage: async ({ page }, use) => {
+        await use(new ProfilePage(page));
     },
-
-    profilePage: async ({ preparedPage }, use) => {
-        const profilePage = new ProfilePage(preparedPage);
-        await use(profilePage);
+    checkoutPage: async ({ page }, use) => {
+        await use(new CheckoutPage(page));
     },
-
-    checkoutPage: async ({ preparedPage }, use) => {
-        const checkoutPage = new CheckoutPage(preparedPage);
-        await use(checkoutPage);
+    contactPage: async ({ page }, use) => {
+        await use(new ContactPage(page));
     },
-
-    // ── Service 07 & 08 fixtures ───────────────────────────────────────────
-    contactPage: async ({ preparedPage }, use) => {
-        const contactPage = new ContactPage(preparedPage);
-        await use(contactPage);
-    },
-
-    accountPage: async ({ preparedPage }, use) => {
-        const accountPage = new AccountPage(preparedPage);
-        await use(accountPage);
+    accountPage: async ({ page }, use) => {
+        await use(new AccountPage(page));
     },
 });
 

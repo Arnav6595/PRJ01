@@ -1,5 +1,5 @@
-
 import { BasePage } from './BasePage.js';
+import { expect } from '@playwright/test'; // <-- ADDED THIS
 
 export class RegisterPage extends BasePage {
     /**
@@ -65,6 +65,6 @@ export class RegisterPage extends BasePage {
      */
     async expectErrorToBeVisible(expectedText) {
         const errorElement = this.page.getByText(expectedText);
-        await this.page.expect(errorElement).toBeVisible();
+        await expect(errorElement).toBeVisible(); // <-- FIXED SYNTAX
     }
 }

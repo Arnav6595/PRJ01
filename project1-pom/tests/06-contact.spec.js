@@ -22,10 +22,10 @@ test.describe('Service 07 — Customer Support / Messaging Suite', () => {
 
     // Because of Global Setup, the browser is ALREADY logged in before this runs.
     // All we need to do is go straight to the contact page for each test.
-    test.beforeEach(async ({ page }) => {
+   test.beforeEach(async ({ page }) => {
         contactPage = new ContactPage(page);
         await page.goto('/contact');
-        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('load'); // Swapped from networkidle
     });
 
     test('TC_07_01 — Contact page loads and URL is correct', async ({ page }) => {

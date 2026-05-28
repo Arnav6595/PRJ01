@@ -1,62 +1,65 @@
 
-// Notice we import 'test' and 'expect' from our custom fixture, NOT directly from playwright
 import { test, expect } from '../fixtures/index.js';
-
-// Import our JSON data files
 import loginData from '../data/users.json' with { type: 'json' };
 import registerData from '../data/register.json' with { type: 'json' };
 
-
 // ============================================================================
-// SUITE 1: LOGIN
+// SUITE 1: LOGIN (Runs as Guest)
 // ============================================================================
-test.describe('Service 1 - Authentication', () => {
+test.describe('Service 01 — Authentication / Login', () => {
 
-    // Instructor Concept: Iterating over JSON data
+    // Wipe any global storageState so every login test starts fully logged out
+    test.use({ storageState: { cookies: [], origins: [] } });
+
     loginData.forEach((scenario) => {
-        
-        // Instructor Concept: Custom Fixture injection ({ loginPage })
-        test(`TC - Login: ${scenario.testName}`, async ({ loginPage, preparedPage }) => {
-            
-            await test.step(`Attempt login with email: ${scenario.email}`, async () => {
+        test(`TC_Login — ${scenario.testName}`, async ({ loginPage, page }) => {
+
+            await loginPage.goTo();
+
+            await test.step(`Fill credentials: ${scenario.email}`, async () => {
                 await loginPage.login(scenario.email, scenario.password);
             });
 
             await test.step('Validate outcome', async () => {
-                if (scenario.expectSuccess) {
-                    await expect.soft(preparedPage).toHaveURL(/.*(account|dashboard)/);
+                if (scenario.expectSuccess !== false) {
+                    // Successful login redirects to /account or dashboard
+                    await expect.soft(page).toHaveURL(/.*(account|dashboard)/);
                 } else {
-                    // Using the logical OR (||) operator as a fallback
-                    await loginPage.expectErrorToBeVisible(scenario.errorMsg || '');
+                    await loginPage.expectErrorToBeVisible(scenario.errorMsg ?? '');
                 }
             });
-            
         });
     });
 });
 
+// ============================================================================
+// SUITE 2: REGISTRATION (Runs as Guest)
+// ============================================================================
+test.describe('Service 01 — Authentication / Registration', () => {
 
-// ============================================================================
-// SUITE 2: REGISTRATION
-// ============================================================================
-test.describe('Service 1 - Registration Flow', () => {
+    // Wipe any global storageState so every register test starts fully logged out
+    test.use({ storageState: { cookies: [], origins: [] } });
 
     registerData.forEach((scenario) => {
-        
-        // Injecting the new registerPage fixture here!
-        test(`TC - Register: ${scenario.testName}`, async ({ registerPage, preparedPage }) => {
-            
+        test(`TC_Register — ${scenario.testName}`, async ({ registerPage, page }) => {
+
+            await registerPage.goTo();
+
             await test.step('Fill out registration form', async () => {
                 await registerPage.registerUser(scenario.userData);
             });
 
             await test.step('Validate outcome', async () => {
                 if (scenario.expectSuccess) {
-                    // After successful registration, it should redirect to the login page
-                    await expect.soft(preparedPage).toHaveURL(/.*login/);
+                    // Successful registration redirects to /auth/login
+                    await expect.soft(page).toHaveURL(/.*login/);
+                } else {
+                    // Validation error should be visible on the page
+                    await expect.soft(
+                        page.locator('[data-test$="-error"]').first()
+                    ).toBeVisible();
                 }
             });
-            
         });
     });
 });

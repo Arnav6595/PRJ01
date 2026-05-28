@@ -27,7 +27,7 @@ export class AccountPage extends BasePage {
         // The PDF download button — data-test="download-invoice"
         this.downloadPdfButton  = page.getByTestId('download-invoice');
         // Any cell that contains an INV- prefixed ID
-        this.invoiceIdCell      = page.locator('td').filter({ hasText: /^INV-/ }).first();
+        this.invoiceIdCell = page.locator('td').filter({ hasText: /INV-/ }).first();
     }
 
     // ── Navigation Helpers ────────────────────────────────────────────────────

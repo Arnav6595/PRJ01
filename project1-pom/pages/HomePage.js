@@ -30,16 +30,21 @@ export class HomePage extends BasePage {
     }
 
     /**
-     * Searches for a product and waits for the results to load
+     * Searches for a product and waits for the API to return the results
      * @param {string} productName
      */
     async searchForProduct(productName) {
+        // Set up the listener BEFORE clicking search
+        const searchResponsePromise = this.page.waitForResponse(response => 
+            response.url().includes('/products/search') && response.status() === 200
+        );
+
         await this.fillInput(this.searchInput, productName);
         await this.clickElement(this.searchButton);
         
-        // CRITICAL ASYNC WAIT: We must wait for the API to return the filtered results
-        // before we tell the test to check what is on the screen.
-        await this.page.waitForTimeout(1000); // Temporary explicit wait
+        // Wait dynamically for the specific API call to finish! 
+        // If it takes 10ms, it moves on instantly. If it takes 2s, it waits safely.
+        await searchResponsePromise; 
     }
 
     /**
