@@ -12,7 +12,7 @@ test.describe('Service 2 - Product Catalog (Guest Mode)', () => {
         await homePage.goTo();
 
         // 2. Give the Angular frontend a moment to settle background network calls
-        await page.waitForLoadState('networkidle');
+       
 
         // 3. Force Playwright to wait until the first product physically appears.
         // This is the ultimate proof that the catalog has successfully loaded.

@@ -16,7 +16,7 @@ test.describe('Service 01 — Authentication / Login', () => {
             await loginPage.goTo();
             
             // 🛡️ THE GOLDEN RULE: Wait for Angular to bind the form!
-            await page.waitForLoadState('networkidle');
+            
             await page.getByTestId('email').waitFor({ state: 'visible', timeout: 10000 });
 
             await test.step(`Fill credentials: ${scenario.email}`, async () => {
@@ -49,7 +49,7 @@ test.describe('Service 01 — Authentication / Registration', () => {
             await registerPage.goTo();
 
             // 🛡️ THE GOLDEN RULE: Wait for Angular to bind the form!
-            await page.waitForLoadState('networkidle');
+            
             await page.getByTestId('first-name').waitFor({ state: 'visible', timeout: 10000 });
 
             await test.step('Fill out registration form', async () => {

@@ -8,7 +8,7 @@ test.describe('Service 3 - Cart State & Management', () => {
         await homePage.goTo();
 
         // 2. Give the Angular frontend a moment to settle background network calls
-        await page.waitForLoadState('networkidle');
+        
 
         // 3. Force Playwright to wait until the first product is physically visible.
         // This guarantees the frontend hasn't crashed and is fully interactive.

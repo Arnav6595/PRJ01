@@ -27,7 +27,7 @@ test.describe('Service 07 — Customer Support / Messaging Suite', () => {
         await page.goto('/contact');
         
         // 🛡️ THE GOLDEN RULE: Let the network quiet down, then wait for the form to physically render
-        await page.waitForLoadState('networkidle');
+        
         await contactPage.subjectDropdown.waitFor({ state: 'visible', timeout: 15000 });
     });
 

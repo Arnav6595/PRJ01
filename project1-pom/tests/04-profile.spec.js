@@ -10,7 +10,7 @@ test.describe('Service 4 - User Profile & Navigation (Logged-In)', () => {
         await homePage.goTo(); 
 
         // 2. Give the Angular frontend a moment to settle
-        await page.waitForLoadState('networkidle');
+      
 
         // 3. Force Playwright to wait until the User Menu physically appears.
         await page.getByTestId('nav-menu').waitFor({ state: 'visible', timeout: 15000 });
