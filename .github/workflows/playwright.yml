@@ -42,15 +42,15 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Clean up old Allure results
-        run: rm -rf allure-results playwright-report
-        shell: bash
+        run: |
+          if (Test-Path allure-results) { Remove-Item -Recurse -Force allure-results }
+          if (Test-Path playwright-report) { Remove-Item -Recurse -Force playwright-report }
+        shell: pwsh
 
-      # Run all tests at once (fullyParallel in config handles the speed)
       - name: Run Playwright Tests
         run: npm run test:ci -- --project=chromium
         continue-on-error: true
 
-      # Upload a single, unified results folder
       - name: Upload Allure Raw Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -90,7 +90,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # Download the single results folder (no pattern matching needed)
       - name: Download Allure Raw Results
         uses: actions/download-artifact@v4
         with:
