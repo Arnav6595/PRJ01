@@ -7,8 +7,16 @@ const address = addressData[0];
 // LOCAL HELPER: Shared by all checkout tests
 // ─────────────────────────────────────────────────────────────────────────
 async function addToCartAndProceedStep1(homePage, productPage, checkoutPage) {
+    // Ensure the product grid has actually loaded before clicking
+    await homePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
     await homePage.productNames.first().click();
+    
     await productPage.clickAddToCart();
+    
+    // Wait for the dynamic cart badge to update, confirming the backend registered the item
+    const cartBadge = productPage.page.locator('[data-test="cart-quantity"]');
+    await expect(cartBadge).toHaveText(/^[1-9]\d*$/, { timeout: 10000 }); 
+    
     await checkoutPage.goToCart();
     await checkoutPage.clickElement(checkoutPage.proceedStep1);
 }

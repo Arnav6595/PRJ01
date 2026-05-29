@@ -1,4 +1,3 @@
-
 import { test, expect } from '../fixtures/index.js';
 import productData from '../data/products.json' with { type: 'json' };
 
@@ -7,9 +6,17 @@ test.describe('Service 2 - Product Catalog (Guest Mode)', () => {
     // Run as an unauthenticated guest
     test.use({ storageState: { cookies: [], origins: [] } });
 
-    // FIX: Must navigate to the home page before interacting!
-    test.beforeEach(async ({ homePage }) => {
+    // ── The Golden Rule: Wait for Angular to settle! ──
+    test.beforeEach(async ({ homePage, page }) => {
+        // 1. Trigger the navigation
         await homePage.goTo();
+
+        // 2. Give the Angular frontend a moment to settle background network calls
+        await page.waitForLoadState('networkidle');
+
+        // 3. Force Playwright to wait until the first product physically appears.
+        // This is the ultimate proof that the catalog has successfully loaded.
+        await homePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
     });
 
     // ── Original Data-Driven Search Test ──
@@ -25,18 +32,25 @@ test.describe('Service 2 - Product Catalog (Guest Mode)', () => {
         });
     });
 
-    // ── NEW: Category Filter Test ──
-    test('TC02 - Filter products by "Hand Tools" category', async ({ homePage }) => {
+    // ── Category Filter Test ──
+    test('TC02 - Filter products by "Hand Tools" category', async ({ homePage, page }) => {
+        
+        // Listen for the product grid to update after clicking the checkbox
+        const filterPromise = page.waitForResponse(
+            (response) => response.url().includes('/products') && response.status() === 200,
+            { timeout: 10000 }
+        ).catch(() => console.log('Filter API loaded instantly.'));
+
         await homePage.handToolsCheckbox.check();
         
-        // Wait for Angular to filter the grid
-        await homePage.page.waitForTimeout(1000); 
+        // Wait for Angular to filter the grid using the API instead of a blind pause
+        await filterPromise; 
         
         const productCount = await homePage.getProductCount();
         expect(productCount).toBeGreaterThan(0);
     });
 
-    // ── NEW: Negative Search Test ──
+    // ── Negative Search Test ──
     test('TC03 - Search for non-existent product returns 0 results', async ({ homePage }) => {
         await homePage.searchForProduct('InvalidItemXYZ999');
         

@@ -2,47 +2,29 @@
 import { test as setup, expect } from '@playwright/test';
 
 const authFile = 'playwright/.auth/user.json';
-const API_BASE  = 'https://api.practicesoftwaretesting.com';
 const SITE_BASE = 'https://practicesoftwaretesting.com';
 
-setup('authenticate via API to bypass Cloudflare', async ({ page, request }) => {
+setup('authenticate via UI to satisfy Angular state', async ({ page }) => {
 
-    // Using '||' to safely fallback if GitHub Actions injects an empty string
     const email    = process.env.CUSTOMER_EMAIL    || 'customer@practicesoftwaretesting.com';
     const password = process.env.CUSTOMER_PASSWORD || 'welcome01';
 
-    console.log(`Sending login request directly to backend API for: ${email}`);
+    console.log(`Performing native UI Login for: ${email}`);
 
-    // Hitting the correct backend endpoint
-    const response = await request.post(`${API_BASE}/users/login`, {
-        data: { email, password },
-    });
+    // 1. Go directly to the login page
+    await page.goto(`${SITE_BASE}/auth/login`);
 
-    expect(
-        response.status(),
-        `API Login failed for ${email} with status: ${response.status()}`
-    ).toBe(200);
+    // 2. Fill out the form exactly like a real user
+    await page.getByTestId('email').fill(email);
+    await page.getByTestId('password').fill(password);
+    await page.getByTestId('login-submit').click();
 
-    const responseBody = await response.json();
-    const token = responseBody.access_token;
-    expect(token, 'No access_token found in API response').toBeTruthy();
+    // 3. Wait for the ultimate proof of login: The User Menu
+    const navMenu = page.getByTestId('nav-menu');
+    await expect(navMenu).toBeVisible({ timeout: 15000 });
 
-    console.log('API Login successful! Injecting token into browser...');
-
-    await page.goto(SITE_BASE);
-
-    await page.evaluate((jwt) => {
-        localStorage.setItem('access_token', jwt);
-        localStorage.setItem('token_type', 'bearer');
-    }, token);
-
-    await page.waitForTimeout(500);
-
+    // 4. Save this flawless, natively generated Angular state!
     await page.context().storageState({ path: authFile });
 
-    console.log(`✅ Session saved successfully to ${authFile}!`);
+    console.log(`✅ Native UI Session saved successfully to ${authFile}!`);
 });
-
-
-
-// trigger CI

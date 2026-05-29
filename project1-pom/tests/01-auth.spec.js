@@ -1,4 +1,3 @@
-
 import { test, expect } from '../fixtures/index.js';
 import loginData from '../data/users.json' with { type: 'json' };
 import registerData from '../data/register.json' with { type: 'json' };
@@ -15,6 +14,10 @@ test.describe('Service 01 — Authentication / Login', () => {
         test(`TC_Login — ${scenario.testName}`, async ({ loginPage, page }) => {
 
             await loginPage.goTo();
+            
+            // 🛡️ THE GOLDEN RULE: Wait for Angular to bind the form!
+            await page.waitForLoadState('networkidle');
+            await page.getByTestId('email').waitFor({ state: 'visible', timeout: 10000 });
 
             await test.step(`Fill credentials: ${scenario.email}`, async () => {
                 await loginPage.login(scenario.email, scenario.password);
@@ -44,6 +47,10 @@ test.describe('Service 01 — Authentication / Registration', () => {
         test(`TC_Register — ${scenario.testName}`, async ({ registerPage, page }) => {
 
             await registerPage.goTo();
+
+            // 🛡️ THE GOLDEN RULE: Wait for Angular to bind the form!
+            await page.waitForLoadState('networkidle');
+            await page.getByTestId('first-name').waitFor({ state: 'visible', timeout: 10000 });
 
             await test.step('Fill out registration form', async () => {
                 await registerPage.registerUser(scenario.userData);

@@ -36,6 +36,7 @@ export class AccountPage extends BasePage {
      * Full flow: open user menu → My Account → Invoices
      */
     async navigateToInvoices() {
+        await this.navMenu.waitFor({ state: 'visible', timeout: 15000 });
         await this.navMenu.click();
         await this.myAccountLink.click();
         await this.invoicesNav.click();

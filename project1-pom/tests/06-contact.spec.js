@@ -25,7 +25,10 @@ test.describe('Service 07 — Customer Support / Messaging Suite', () => {
    test.beforeEach(async ({ page }) => {
         contactPage = new ContactPage(page);
         await page.goto('/contact');
-        await page.waitForLoadState('load'); // Swapped from networkidle
+        
+        // 🛡️ THE GOLDEN RULE: Let the network quiet down, then wait for the form to physically render
+        await page.waitForLoadState('networkidle');
+        await contactPage.subjectDropdown.waitFor({ state: 'visible', timeout: 15000 });
     });
 
     test('TC_07_01 — Contact page loads and URL is correct', async ({ page }) => {

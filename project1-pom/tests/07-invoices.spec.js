@@ -1,14 +1,19 @@
-
 import { test, expect } from '../fixtures/index.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe('Service 08 — Invoices & Account Management (Logged-In)', () => {
 
-    // ── Global Setup handles authentication automatically! ──
-    // All we need to do is go to the home page before each test.
-   test.beforeEach(async ({ accountPage }) => {
+    // ── Global Setup handles authentication automatically via auth.setup.js! ──
+    test.beforeEach(async ({ accountPage }) => {
+        // 1. Navigate to the page. (Playwright automatically attaches your saved session token!)
         await accountPage.navigate('/');
-        await accountPage.page.waitForLoadState('load'); // Swapped from networkidle
+
+        // 2. Give the Angular frontend a moment to settle its background network calls
+        await accountPage.page.waitForLoadState('networkidle');
+
+        // 3. Force Playwright to wait until the User Menu physically appears on the screen.
+        // This is the ultimate proof that the app recognizes you as logged in.
+        await accountPage.navMenu.waitFor({ state: 'visible', timeout: 15000 });
     });
 
     // ── TC_08_01: User menu is visible after login ────────────────────────────
