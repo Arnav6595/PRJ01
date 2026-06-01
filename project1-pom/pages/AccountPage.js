@@ -22,6 +22,8 @@ export class AccountPage extends BasePage {
         this.detailsButton      = page.locator('a.btn-primary:has-text("Details")').first();
         // All "Details" buttons — used to count or iterate invoices
         this.allDetailsButtons  = page.locator('a.btn-primary:has-text("Details")');
+        // List page: the INV- id lives in a table cell (plain text, unlike the detail page).
+        this.firstInvoiceListCell = page.locator('td').filter({ hasText: /INV-/ }).first();
 
         // ── Invoice Detail Page ───────────────────────────────────────────────
         // The PDF download button — data-test="download-invoice"
@@ -61,10 +63,11 @@ export class AccountPage extends BasePage {
     }
 
     /**
-     * Returns the invoice reference value from the "Invoice Number" textbox
-     * @returns {Promise<string>}
+     * Returns the INV- id text from the first row on the invoice LIST page
+     * @returns {Promise<string|null>}
      */
     async getFirstInvoiceId() {
-        return await this.invoiceIdCell.inputValue();
+        await this.firstInvoiceListCell.waitFor({ state: 'visible', timeout: 10000 });
+        return await this.firstInvoiceListCell.textContent();
     }
 }
