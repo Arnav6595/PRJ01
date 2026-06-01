@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wipro Capstone Project and Test Summary — Krishna Kumar Yadav</title>
+<style>
+  :root{
+    --c-accent:#e8722e; --c-dark:#5b5750; --c-mute:#8a8580; --c-line:#d9d4cc;
+    --c-band1:#c7b89a; --c-band2:#a9ddd6; --c-band3:#e8722e; --c-band4:#5b5750;
+  }
+  *{box-sizing:border-box;}
+  html{font-family:"Segoe UI",Arial,Helvetica,sans-serif;color:#2c2a27;font-size:12pt;line-height:1.5;}
+  body{margin:0;}
+  /* Print / page setup */
+  @page{size:A4;margin:20mm 18mm;}
+  @media print{
+    .page-break{page-break-before:always;}
+    a{color:inherit;text-decoration:none;}
+    .no-print{display:none;}
+  }
+  .page-break{page-break-before:always;}
+  h1,h2,h3,h4{color:var(--c-dark);line-height:1.25;}
+  h1{font-size:26pt;margin:0 0 6pt;}
+  h2{font-size:18pt;border-bottom:2px solid var(--c-accent);padding-bottom:4pt;margin-top:26pt;color:var(--c-accent);}
+  h3{font-size:14pt;margin-top:18pt;color:var(--c-dark);}
+  h4{font-size:12pt;margin-top:14pt;color:var(--c-dark);}
+  p{margin:8pt 0;}
+  .band{height:10px;display:flex;margin-bottom:4pt;}
+  .band span{flex:1;}
+  .band .b1{background:var(--c-band1);} .band .b2{background:var(--c-band2);}
+  .band .b3{background:var(--c-band3);} .band .b4{background:var(--c-band4);}
+  table{width:100%;border-collapse:collapse;margin:10pt 0;font-size:10.5pt;}
+  th,td{border:1px solid var(--c-line);padding:6pt 8pt;text-align:left;vertical-align:top;}
+  th{background:#f4f1ec;color:var(--c-dark);font-weight:600;}
+  tr:nth-child(even) td{background:#faf8f5;}
+  code,pre{font-family:"Consolas","Courier New",monospace;}
+  code{background:#f4f1ec;padding:1px 4px;border-radius:3px;font-size:10pt;}
+  pre{background:#2d2b28;color:#e8e6e1;padding:12pt;border-radius:6px;overflow:auto;font-size:9.5pt;line-height:1.45;}
+  pre .cm{color:#9aa0a6;}
+  .img-ph{border:2px dashed var(--c-mute);background:#f7f5f1;color:var(--c-mute);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    height:230px;border-radius:6px;margin:12pt 0;font-size:11pt;font-style:italic;padding:10pt;}
+  .img-ph.tall{height:330px;}
+  .img-ph.short{height:150px;}
+  .badge{display:inline-block;background:var(--c-accent);color:#fff;border-radius:4px;padding:1px 8px;font-size:9pt;font-weight:600;}
+  .ok{color:#1a7f37;font-weight:700;}
+  .muted{color:var(--c-mute);}
+  ul,ol{margin:8pt 0 8pt 18pt;}
+  li{margin:4pt 0;}
+  .cover{height:255mm;display:flex;flex-direction:column;}
+  .cover .title{font-size:34pt;color:var(--c-dark);margin-top:8pt;line-height:1.15;}
+  .cover .sub{font-size:15pt;color:var(--c-mute);margin-top:10pt;}
+  .cover .who{margin-top:auto;}
+  .cover .who .name{font-size:17pt;color:var(--c-accent);font-weight:700;}
+  .cover .who .org{font-size:12pt;color:var(--c-dark);}
+  .toc li{margin:6pt 0;}
+  .kpi{display:flex;gap:10pt;flex-wrap:wrap;margin:12pt 0;}
+  .kpi div{flex:1;min-width:120px;border:1px solid var(--c-line);border-radius:6px;padding:10pt;text-align:center;background:#faf8f5;}
+  .kpi .n{font-size:22pt;font-weight:700;color:var(--c-accent);display:block;}
+  .kpi .l{font-size:9.5pt;color:var(--c-mute);}
+  footer.pg{position:fixed;bottom:8mm;right:18mm;font-size:9pt;color:var(--c-mute);}
+  .small{font-size:10pt;}
+</style>
+</head>
+<body>
+
+<!-- ============================ COVER ============================ -->
+<section class="cover">
+  <div class="band"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span></div>
+  <div class="img-ph tall">📷 [Insert cover image: the "Practice Software Testing – Toolshop" storefront, or the Allure 100%-pass dashboard]</div>
+  <div class="title">Capstone Project<br>and Test Summary</div>
+  <div class="sub">A Production-Ready Playwright Automation Framework<br>for the Toolshop E-Commerce Platform</div>
+  <div class="sub small">June 2026</div>
+  <div class="who">
+    <div class="name">Krishna Kumar Yadav</div>
+    <div class="org">Wipro Capstone Project &mdash; Playwright Batch 2</div>
+  </div>
+  <div class="band" style="margin-top:14pt;"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span></div>
+</section>
+
+<!-- ============================ TOC ============================ -->
+<section class="page-break">
+  <h2>Table of Contents</h2>
+  <ol class="toc">
+    <li>Overview</li>
+    <li>Goals &mdash; Business &amp; Quality-Engineering Objectives</li>
+    <li>Specifications &mdash; In-Scope Functional Modules</li>
+    <li>Milestone 1 &mdash; Analysis &amp; Planning (Requirements, Strategy, RTM)</li>
+    <li>Milestone 2 &mdash; Framework Architecture &amp; Setup</li>
+    <li>Milestone 3 &mdash; Functional Test Suites (124 tests, 8 services)</li>
+    <li>Milestone 4 &mdash; Advanced Verification Layers (Mocking, Accessibility, Visual)</li>
+    <li>Milestone 5 &mdash; CI/CD Pipeline, Cloudflare Resolution &amp; Allure Reporting</li>
+    <li>Test Execution Summary</li>
+    <li>Challenges &amp; Resolutions</li>
+    <li>Conclusion</li>
+  </ol>
+</section>
+
+<!-- ============================ OVERVIEW ============================ -->
+<section class="page-break">
+  <h2>1. Overview</h2>
+  <p>The Application Under Test (AUT) is <strong>“Practice Software Testing – Toolshop”</strong>
+  (<code>practicesoftwaretesting.com</code>), a fully functional, Angular-based e-commerce platform that
+  simulates real-world retail operations. The system supports a complete user journey: product discovery,
+  search and filtering, shopping-cart management, multi-step checkout with several payment methods,
+  customer support, invoice/order history, and a privileged administrative dashboard.</p>
+
+  <p>This document presents the quality-engineering strategy and the implementation of a
+  <strong>production-ready Playwright automation framework</strong> built from scratch in JavaScript.
+  The framework isolates front-end UI testing from a volatile, third-party backend, handles a single-page
+  Angular application reliably with auto-waiting locators, and runs unattended inside a Continuous
+  Integration pipeline that publishes a rich Allure execution dashboard.</p>
+
+  <p>The engagement followed the full Software Testing Life Cycle (STLC): requirement analysis, test
+  strategy and design, framework construction, execution, defect documentation, and reporting. The final
+  suite comprises <strong>139 automated tests</strong> — 124 functional tests across eight services plus
+  15 advanced-verification tests (network mocking, accessibility, and visual checkpoints) — executing in
+  parallel across a three-way sharded CI matrix at a <span class="ok">100% pass rate</span>.</p>
+
+  <div class="kpi">
+    <div><span class="n">139</span><span class="l">Automated tests</span></div>
+    <div><span class="n">8</span><span class="l">Services covered</span></div>
+    <div><span class="n">3&times;</span><span class="l">Parallel CI shards</span></div>
+    <div><span class="n">100%</span><span class="l">Pass rate</span></div>
+  </div>
+
+  <div class="img-ph">📷 [Insert screenshot: Allure “Overview” widget showing 139 test cases at 100%]</div>
+</section>
+
+<!-- ============================ GOALS ============================ -->
+<section class="page-break">
+  <h2>2. Goals</h2>
+  <p>The primary quality objectives for this engagement are defined below.</p>
+
+  <h3>2.1 Business Objectives</h3>
+  <ul>
+    <li><strong>Transaction Integrity:</strong> guarantee that the end-to-end checkout flow — address entry,
+      payment-method selection, and order confirmation — behaves correctly for both guest and authenticated users.</li>
+    <li><strong>User Retention:</strong> validate the post-purchase experience: invoice listing, invoice
+      detail pages, and the “Download PDF” journey that supports customer self-service.</li>
+    <li><strong>Data &amp; Access Security:</strong> verify authentication, role separation (Customer vs
+      Admin), invalid-credential handling, and that the password field is masked.</li>
+  </ul>
+
+  <h3>2.2 Quality-Engineering Objectives</h3>
+  <ul>
+    <li><strong>Zero-Flakiness Automation:</strong> eliminate artificial failures using Playwright’s
+      auto-waiting locators, response-driven waits, and a hardened authentication setup.</li>
+    <li><strong>High Functional Coverage:</strong> cover every in-scope module with both happy-path and
+      negative/edge-case scenarios, driven by externalised data.</li>
+    <li><strong>Network Resilience:</strong> intercept and mock backend responses (HTTP 500/401, empty,
+      aborted) to prove the front-end degrades gracefully.</li>
+    <li><strong>Quality Gates:</strong> integrate automated accessibility auditing (axe-core, WCAG 2 A/AA)
+      and visual UI checkpoints into the regression run.</li>
+    <li><strong>Pipeline Readiness:</strong> run the suite headlessly-equivalent in CI, in parallel across
+      shards, with screenshots/video/traces captured on failure and an Allure dashboard published to GitHub Pages.</li>
+  </ul>
+</section>
+
+<!-- ============================ SPECIFICATIONS ============================ -->
+<section class="page-break">
+  <h2>3. Specifications — In-Scope Functional Modules</h2>
+  <p>Testing covers the following eight services (modules) of the Toolshop platform:</p>
+  <table>
+    <tr><th>#</th><th>Service / Module</th><th>Coverage summary</th></tr>
+    <tr><td>1</td><td>Authentication</td><td>Login (valid/invalid/empty), registration, password masking, session redirect.</td></tr>
+    <tr><td>2</td><td>Product Catalog</td><td>Listing, keyword search, category filtering, product-detail navigation.</td></tr>
+    <tr><td>3</td><td>Shopping Cart</td><td>Add-to-cart, quantity increment/decrement, badge state, cart navigation.</td></tr>
+    <tr><td>4</td><td>User Profile</td><td>Account navigation (profile, favourites, invoices, messages), profile update.</td></tr>
+    <tr><td>5</td><td>Checkout</td><td>Guest &amp; authenticated multi-step checkout, payment methods, field validation.</td></tr>
+    <tr><td>6</td><td>Contact / Support</td><td>Form fields, subject options, message validation, attachment, submission.</td></tr>
+    <tr><td>7</td><td>Invoices / History</td><td>Invoice list, INV- references, detail pages, “Download PDF”.</td></tr>
+    <tr><td>8</td><td>Admin Dashboard</td><td>Dashboard, Brands/Categories/Products/Orders/Users/Messages/Settings, Reports, CRUD actions.</td></tr>
+  </table>
+  <p class="small muted">Out of scope for this AUT: components the application does not implement (e.g., iframes,
+  Shadow-DOM date-pickers, drag-and-drop). Where the guidelines reference such components, equivalent
+  modern-locator techniques are demonstrated on the components the AUT does expose.</p>
+</section>
+
+<!-- ============================ MILESTONE 1 ============================ -->
+<section class="page-break">
+  <h2>Milestone 1 — Analysis &amp; Planning</h2>
+
+  <h3>1.1 Introduction</h3>
+  <p>The objective of this phase is to analyse the business requirements of the Toolshop platform and define
+  a comprehensive, testable strategy, ensuring functional and non-functional requirements are verifiable and
+  risks are identified early in the STLC.</p>
+
+  <h3>1.2 Requirement Analysis</h3>
+  <h4>1.2.1 Functional Requirements (FR)</h4>
+  <table>
+    <tr><th>Module</th><th>Requirement</th><th>Priority</th></tr>
+    <tr><td>Authentication</td><td>Users can log in with valid credentials and are rejected with a clear error on invalid/empty input. Registration creates a new account.</td><td>High</td></tr>
+    <tr><td>Catalog</td><td>Users can browse, search by keyword, and filter products by category; product detail pages render with an Add-to-Cart action.</td><td>High</td></tr>
+    <tr><td>Cart</td><td>Users can add products and adjust quantity; the cart badge reflects state and persists into the checkout flow.</td><td>High</td></tr>
+    <tr><td>Checkout</td><td>The system processes a multi-step checkout and generates a confirmation; required fields are validated; multiple payment methods are supported.</td><td>Critical</td></tr>
+    <tr><td>Invoices</td><td>Authenticated users can view invoices with INV- references and open detail pages with a downloadable PDF.</td><td>Medium</td></tr>
+    <tr><td>Admin</td><td>Admin users can reach the dashboard and manage Brands, Categories, Products, Orders, Users, and Reports.</td><td>High</td></tr>
+  </table>
+
+  <h4>1.2.2 Non-Functional Requirements (NFR)</h4>
+  <ul>
+    <li><strong>Reliability:</strong> the suite must run deterministically in CI with zero artificial flakiness.</li>
+    <li><strong>Resilience:</strong> the UI must degrade gracefully when backend APIs fail (500/401).</li>
+    <li><strong>Accessibility:</strong> core pages are audited against WCAG 2.0 A/AA.</li>
+    <li><strong>Compatibility:</strong> the framework targets the latest Google Chrome (real channel).</li>
+    <li><strong>Performance of the harness:</strong> the full suite completes within the application’s
+      short-lived authentication-session window via parallel sharding.</li>
+  </ul>
+
+  <h3>1.3 Test Strategy</h3>
+  <p>A layered, automation-first strategy is applied:</p>
+  <ul>
+    <li><strong>Functional UI automation</strong> — data-driven, Page-Object-Model tests for all 8 services.</li>
+    <li><strong>Negative &amp; edge-case testing</strong> — invalid inputs, disabled-button states, validation messages.</li>
+    <li><strong>Network interception</strong> — forced backend failures and mocked payloads.</li>
+    <li><strong>Accessibility auditing</strong> — axe-core WCAG scans as a monitoring layer.</li>
+    <li><strong>Visual checkpoints</strong> — widget capture with layout-integrity assertions.</li>
+  </ul>
+
+  <h3>1.4 Requirements Traceability Matrix (RTM)</h3>
+  <table>
+    <tr><th>Requirement</th><th>Representative Test Scenario(s)</th><th>Service</th></tr>
+    <tr><td>Valid login</td><td>TC_Login — Valid Customer; TC_Login_Ext_05 — lands on account</td><td>Auth</td></tr>
+    <tr><td>Invalid login rejected</td><td>TC_Login — Invalid password; TC_Login_Ext_02</td><td>Auth</td></tr>
+    <tr><td>Registration</td><td>TC_Register — Valid New User (unique email per run)</td><td>Auth</td></tr>
+    <tr><td>Search &amp; filter</td><td>TC01 search; TC02 category; TC02_Ext_03/04</td><td>Catalog</td></tr>
+    <tr><td>Cart state</td><td>TC01 badge; TC03_Ext_02 quantity</td><td>Cart</td></tr>
+    <tr><td>Checkout confirmation</td><td>TC10_Guest; TC10_Auth; TC_CO_Ext_05</td><td>Checkout</td></tr>
+    <tr><td>Checkout validation</td><td>TC20_Neg; TC23a; TC24 (documented bug); TC21 (documented bug)</td><td>Checkout</td></tr>
+    <tr><td>Invoice integrity</td><td>TC_08_08 INV- id; TC_08_12 detail reference</td><td>Invoices</td></tr>
+    <tr><td>Admin access</td><td>TC_Admin_01..11; TC_Admin_Ext_01..05</td><td>Admin</td></tr>
+    <tr><td>Backend resilience</td><td>MOCK_01 (500); MOCK_02 (401)</td><td>Cross-cutting</td></tr>
+    <tr><td>Accessibility</td><td>A11Y_01..05 (WCAG 2 A/AA)</td><td>Cross-cutting</td></tr>
+  </table>
+</section>
+
+<!-- ============================ MILESTONE 2 ============================ -->
+<section class="page-break">
+  <h2>Milestone 2 — Framework Architecture &amp; Setup</h2>
+
+  <h3>2.1 Technology Stack</h3>
+  <table>
+    <tr><th>Concern</th><th>Choice</th></tr>
+    <tr><td>Language</td><td>JavaScript (ES Modules)</td></tr>
+    <tr><td>Test runner</td><td><code>@playwright/test</code></td></tr>
+    <tr><td>Browser</td><td>Google Chrome (real <code>channel: 'chrome'</code>)</td></tr>
+    <tr><td>Architecture</td><td>Page Object Model + fixtures (dependency injection)</td></tr>
+    <tr><td>Accessibility</td><td><code>@axe-core/playwright</code></td></tr>
+    <tr><td>Reporting</td><td>Allure + Playwright HTML + list</td></tr>
+    <tr><td>CI/CD</td><td>GitHub Actions (3-shard matrix) &rarr; GitHub Pages</td></tr>
+    <tr><td>Config</td><td><code>dotenv</code> for environment-driven base URLs/credentials</td></tr>
+  </table>
+
+  <h3>2.2 Project Structure</h3>
+<pre><span class="cm"># project1-pom/</span>
+├── playwright.config.js      <span class="cm"># runner config: parallelism, retries, diagnostics</span>
+├── fixtures/index.js         <span class="cm"># DI: injects page objects into every test</span>
+├── pages/                    <span class="cm"># Page Object Model classes</span>
+│   ├── BasePage.js  HomePage.js  LoginPage.js  RegisterPage.js
+│   ├── ProductPage.js  CheckoutPage.js  AccountPage.js
+│   ├── ContactPage.js  ProfilePage.js  AdminPage.js
+├── data/                     <span class="cm"># externalised JSON test data</span>
+│   ├── users.json  products.json  profile.json  address.json  register.json
+└── tests/
+    ├── auth.setup.js                 <span class="cm"># multi-role storageState seeding</span>
+    ├── 01-auth … 10-checkout-validation.spec.js   <span class="cm"># functional</span>
+    └── 11-network-mocking · 12-accessibility · 13-visual-regression.spec.js</pre>
+
+  <h3>2.3 Page Object Model (POM)</h3>
+  <p>Every page is a class extending <code>BasePage</code>, exposing locators and high-level actions while
+  keeping selectors entirely separated from test assertions — satisfying the “strict POM” requirement.
+  Locators prefer the application’s <code>data-test</code> attributes (configured globally via
+  <code>testIdAttribute: 'data-test'</code>), with role/text locators as resilient fallbacks.</p>
+<pre><span class="cm">// pages/LoginPage.js (excerpt)</span>
+export class LoginPage extends BasePage {
+  constructor(page){
+    super(page);
+    this.emailInput   = page.getByTestId('email');
+    this.passwordInput= page.getByTestId('password');
+    this.loginButton  = page.getByTestId('login-submit');
+  }
+  async login(email, password){
+    await this.fillInput(this.emailInput, email);
+    await this.fillInput(this.passwordInput, password);
+    await this.clickElement(this.loginButton);
+  }
+}</pre>
+
+  <h3>2.4 Fixtures (Dependency Injection)</h3>
+  <p>A custom <code>test</code> fixture instantiates each page object and injects it, so specs request only
+  what they need (<code>async ({ homePage, checkoutPage }) =&gt; …</code>). This removes boilerplate and
+  centralises object lifecycle.</p>
+  <div class="img-ph short">📷 [Insert screenshot: VS Code showing fixtures/index.js]</div>
+
+  <h3>2.5 Data-Driven Testing</h3>
+  <p>Inputs are externalised into JSON under <code>data/</code> and iterated to generate parameterised tests
+  (e.g., the login matrix and product search), with no credentials hard-coded inside scripts.</p>
+<pre><span class="cm">// data/users.json drives the login matrix</span>
+[ { "testName":"Valid Customer Account", "email":"customer@…", "password":"welcome01" },
+  { "testName":"Invalid password", …, "expectSuccess":false, "errorMsg":"Invalid email or password" },
+  { "testName":"Empty fields", …, "expectSuccess":false, "errorMsg":"Email is required" } ]</pre>
+
+  <h3>2.6 Configuration Highlights</h3>
+  <table>
+    <tr><th>Setting</th><th>Value</th><th>Rationale</th></tr>
+    <tr><td><code>fullyParallel</code></td><td>true</td><td>Maximise throughput.</td></tr>
+    <tr><td><code>workers</code> (CI)</td><td>2</td><td>Parallelism without overloading the shared demo.</td></tr>
+    <tr><td><code>retries</code> (CI)</td><td>2</td><td>Absorb the public demo’s transient flakiness.</td></tr>
+    <tr><td><code>trace</code></td><td>on-first-retry</td><td>Deep diagnostics only when needed.</td></tr>
+    <tr><td><code>screenshot</code></td><td>only-on-failure</td><td>Failure-boundary capture.</td></tr>
+    <tr><td><code>video</code></td><td>retain-on-failure</td><td>Failure-boundary capture.</td></tr>
+    <tr><td><code>testIdAttribute</code></td><td>data-test</td><td>Stable, semantic locators.</td></tr>
+  </table>
+
+  <h3>2.7 Multi-Role Authentication Setup</h3>
+  <p>A dedicated <code>auth.setup.js</code> “setup project” logs in once as <strong>Customer</strong> and once
+  as <strong>Admin</strong>, saving each session to a <code>storageState</code> file. Functional specs declare
+  <code>dependencies: ['setup']</code> and select the appropriate stored session, giving a fast, reliable
+  multi-role login matrix without repeating UI login in every test.</p>
+  <div class="img-ph short">📷 [Insert screenshot: auth.setup.js — Customer & Admin authentication]</div>
+</section>
+
+<!-- ============================ MILESTONE 3 ============================ -->
+<section class="page-break">
+  <h2>Milestone 3 — Functional Test Suites</h2>
+
+  <h3>3.1 Design Methodology</h3>
+  <p>Tests are built around three principles: <strong>path verification</strong> (following the critical user
+  journey end-to-end), <strong>assertion-driven validation</strong> (every test asserts an explicit expected
+  state via Playwright web-first assertions), and <strong>requirement traceability</strong> (each test maps to
+  an FR from Milestone 1). The suite contains <strong>124 functional tests</strong> (including the two
+  authentication-setup tests) across the eight services. An additional 40 functional tests were authored to
+  deepen coverage — five per service — each placed beneath a clearly marked
+  <code>NEW TEST CASES (added 2026-06-01)</code> boundary comment in its spec file.</p>
+
+  <h3>3.2 Test Cases by Service</h3>
+
+  <h4>Service 1 — Authentication</h4>
+  <ul class="small">
+    <li>TC_Login — Valid Customer / Invalid password / Empty fields (data-driven)</li>
+    <li>TC_Register — Valid New User Registration (unique email per run)</li>
+    <li>TC_Login_Ext_01 — Login form renders email, password, submit</li>
+    <li>TC_Login_Ext_02 — Invalid credentials show an authentication error</li>
+    <li>TC_Login_Ext_03 — Password field masks its input</li>
+    <li>TC_Login_Ext_04 — Registration page renders first-name &amp; email</li>
+    <li>TC_Login_Ext_05 — Valid customer login lands on the account area</li>
+  </ul>
+
+  <h4>Service 2 — Product Catalog</h4>
+  <ul class="small">
+    <li>TC01 — Search product by name (data-driven); TC02 — Filter by Hand Tools; TC03 — No-results search</li>
+    <li>TC02_Ext_01 — Catalog shows multiple cards; TC02_Ext_02 — first card has a name</li>
+    <li>TC02_Ext_03 — “Pliers” search returns matches; TC02_Ext_04 — Power Tools filter</li>
+    <li>TC02_Ext_05 — Opening a product shows detail page + Add-to-Cart</li>
+  </ul>
+
+  <h4>Service 3 — Shopping Cart</h4>
+  <ul class="small">
+    <li>TC01 — Add to cart updates badge; TC02 — Quantity before add updates badge</li>
+    <li>TC03_Ext_01 — Positive badge after add; TC03_Ext_02 — increase &rarr; qty 2; TC03_Ext_03 — qty floor at 1</li>
+    <li>TC03_Ext_04 — Cart &rarr; checkout flow reachable; TC03_Ext_05 — qty controls present</li>
+  </ul>
+
+  <h4>Service 4 — User Profile</h4>
+  <ul class="small">
+    <li>TC_Nav_01..04 — Navigate to Profile / Favorites / Invoices / Messages; TC_05 — Update name</li>
+    <li>TC_Nav_Ext_01 — “My account” link; TC_Nav_Ext_02 — profile page; TC_Nav_Ext_03/04 — fields pre-populated</li>
+    <li>TC_Nav_Ext_05 — Sign-out option exposed</li>
+  </ul>
+
+  <h4>Service 5 — Checkout</h4>
+  <ul class="small">
+    <li>Guest: TC10_Guest E2E; TC13_Pos bank transfer; TC20_Neg numeric account; TC11/TC12/TC17_Neg validation</li>
+    <li>Auth: TC10_Auth E2E; TC13/14/15/16_Pos; TC11/18/20/22_Neg; TC23a sequential errors; TC24 (documented bug)</li>
+    <li>Validation: TC23b — fill-after-errors completes; TC21 — documented enabled-button bug</li>
+    <li>TC_CO_Ext_01..05 — guest tab, proceed-gating, payment options, Finish enablement</li>
+  </ul>
+
+  <h4>Service 6 — Contact / Support</h4>
+  <ul class="small">
+    <li>TC_07_01..07 — page load, fields, logged-in proof, subject options, submit-enabled, message validation</li>
+    <li>TC_07_08..14 — submission, success alert, subject variants, attachment</li>
+    <li>TC_07_Ext_01..05 — subject options, field input, 60-char message, valid submission</li>
+  </ul>
+
+  <h4>Service 7 — Invoices / History</h4>
+  <ul class="small">
+    <li>TC_08_01..08 — nav, list, “My account”, invoices link/URL, record present, INV- id</li>
+    <li>TC_08_09..15 — Details button, detail navigation, INV- reference (input value), Download PDF</li>
+    <li>TC_08_Ext_01..05 — invoices URL, record count, details button, INV- id, button/row parity</li>
+  </ul>
+
+  <h4>Service 8 — Admin Dashboard</h4>
+  <ul class="small">
+    <li>TC_Admin_01..11 — dashboard + Brands/Categories/Products/Orders/Users/Messages/Settings/Reports nav</li>
+    <li>TC_Action_01..05 — add Brand, dynamic Edit/Delete, Categories, Orders search, Users</li>
+    <li>TC_Admin_Ext_01..05 — menu links, Reports dropdown, products table, Add control, dashboard title</li>
+  </ul>
+
+  <h3>3.3 Functional Results</h3>
+  <p>All functional suites pass. Two tests intentionally <strong>document genuine application bugs</strong>
+  discovered during automation (TC24 — alphabetic input bypasses numeric validation; TC21 — the Finish button
+  remains enabled when the account name is omitted); these assert the actual buggy behaviour and are annotated
+  to be flipped once the application is fixed.</p>
+  <div class="img-ph">📷 [Insert screenshot: Allure “Suites” view of the functional services, all green]</div>
+</section>
+
+<!-- ============================ MILESTONE 4 ============================ -->
+<section class="page-break">
+  <h2>Milestone 4 — Advanced Verification Layers</h2>
+
+  <h3>4.1 Network Interception &amp; Backend Mocking</h3>
+  <p>Using <code>page.route()</code>, the catalog API is intercepted to simulate backend failure and mocked
+  states, proving the Angular front-end degrades gracefully rather than crashing.</p>
+  <table>
+    <tr><th>Test</th><th>Scenario</th><th>Expected</th></tr>
+    <tr><td>MOCK_01</td><td>Force HTTP 500 on /products</td><td>Shell renders; zero products</td></tr>
+    <tr><td>MOCK_02</td><td>Force HTTP 401 on /products</td><td>No products shown</td></tr>
+    <tr><td>MOCK_03</td><td>Mocked empty payload</td><td>Empty catalog</td></tr>
+    <tr><td>MOCK_04</td><td>Aborted request</td><td>App does not crash</td></tr>
+    <tr><td>MOCK_05</td><td>Intercept &amp; continue</td><td>Real data loads; interception observed</td></tr>
+  </table>
+<pre><span class="cm">// 11-network-mocking.spec.js (excerpt)</span>
+await page.route(/api\.practicesoftwaretesting\.com\/products/, route =>
+  route.fulfill({ status: 500, contentType:'application/json',
+                  body: JSON.stringify({ message:'Server Error' }) }));
+await homePage.goTo();
+await expect(homePage.searchInput).toBeVisible();      <span class="cm">// shell intact</span>
+expect(await homePage.productNames.count()).toBe(0);    <span class="cm">// graceful</span></pre>
+  <div class="img-ph short">📷 [Insert screenshot: catalog under a mocked 500 — empty grid, page intact]</div>
+
+  <h3>4.2 Accessibility (axe-core, WCAG 2 A/AA)</h3>
+  <p>Five core pages are scanned with <code>@axe-core/playwright</code>. Because the AUT is a third-party
+  application that cannot be patched, the suite operates as a <strong>monitoring layer</strong>: it surfaces
+  and attaches every violation (grouped by impact) to the report rather than hard-failing on the application’s
+  pre-existing accessibility debt. For example, the login and registration pages exhibit a critical
+  <code>button-name</code> violation, which the scan records for stakeholder visibility.</p>
+  <table>
+    <tr><th>Test</th><th>Page</th></tr>
+    <tr><td>A11Y_01</td><td>Home</td></tr><tr><td>A11Y_02</td><td>Login</td></tr>
+    <tr><td>A11Y_03</td><td>Registration</td></tr><tr><td>A11Y_04</td><td>Product detail</td></tr>
+    <tr><td>A11Y_05</td><td>Contact</td></tr>
+  </table>
+  <div class="img-ph short">📷 [Insert screenshot: Allure attachment — axe violations JSON for the login page]</div>
+
+  <h3>4.3 Visual Regression / UI Checkpoints</h3>
+  <p>Five critical widgets are captured as image attachments and asserted to render with a real, non-zero
+  bounding box — catching collapsed or broken layouts deterministically on a live, data-changing site without
+  brittle committed pixel baselines. Pixel-diff baselines can be seeded with
+  <code>npx playwright test 13-visual-regression --update-snapshots</code> and the capture swapped for
+  <code>toHaveScreenshot()</code>.</p>
+  <table>
+    <tr><th>Test</th><th>Widget</th></tr>
+    <tr><td>VIS_01</td><td>Top navigation bar</td></tr><tr><td>VIS_02</td><td>Search widget</td></tr>
+    <tr><td>VIS_03</td><td>Login form</td></tr><tr><td>VIS_04</td><td>Product card</td></tr>
+    <tr><td>VIS_05</td><td>Footer banner</td></tr>
+  </table>
+  <div class="img-ph short">📷 [Insert screenshot: Allure attachments — captured widget images]</div>
+</section>
+
+<!-- ============================ MILESTONE 5 ============================ -->
+<section class="page-break">
+  <h2>Milestone 5 — CI/CD Pipeline, Cloudflare Resolution &amp; Allure Reporting</h2>
+
+  <h3>5.1 GitHub Actions Workflow</h3>
+  <p>The pipeline (<code>.github/workflows/playwright.yml</code>) installs dependencies, caches npm,
+  installs the Chrome browser, executes the sharded suite, uploads Allure raw results per shard, then a
+  dedicated <code>report</code> job merges them and publishes the HTML Allure report to GitHub Pages.</p>
+<pre><span class="cm"># test job — 3-way matrix</span>
+strategy:
+  fail-fast: false
+  matrix:
+    shard: [1, 2, 3]
+steps:
+  - run: npm ci
+  - run: npx playwright install chrome --with-deps
+  - run: xvfb-run -a npm run test:ci -- --project=chromium --shard=${{ matrix.shard }}/3
+  - uses: actions/upload-artifact@v4
+    with: { name: allure-results-${{ matrix.shard }}, path: project1-pom/allure-results }</pre>
+
+  <h3>5.2 The Cloudflare Challenge &amp; Its Resolution</h3>
+  <p>The most significant engineering challenge was that the public AUT sits behind <strong>Cloudflare bot
+  protection</strong>. The resolution was empirical and iterative:</p>
+  <ol>
+    <li><strong>Self-hosted runner (blocked):</strong> a single static IP was repeatedly challenged; once
+      flagged, every login failed and the whole dependent suite collapsed.</li>
+    <li><strong>GitHub-hosted runner + headed Chrome:</strong> moving to <code>ubuntu-latest</code> and running
+      real Chrome <em>headed</em> via <code>xvfb</code> (with the automation fingerprint reduced) allowed the
+      Cloudflare JavaScript challenge to auto-solve. This <span class="ok">bypassed the block</span>.</li>
+    <li><strong>Session expiry (root-caused):</strong> the demo issues short-lived auth tokens and resets data
+      periodically; a long serial run outlived the session captured at setup, so late login-dependent specs
+      failed. <strong>Sharding (3 machines, fresh login each) + parallelism</strong> brought the suite well
+      within the session window.</li>
+    <li><strong>Transient stabilisation:</strong> reduced per-shard workers, increased retries, and hardened the
+      authentication wait (15s &rarr; 30s) to remove intermittent shard skips.</li>
+  </ol>
+  <div class="img-ph">📷 [Insert screenshot: GitHub Actions run — 3 green shards + report job]</div>
+
+  <h3>5.3 Sharding &amp; Parallelism</h3>
+  <p>The suite is split across three parallel runners via <code>--shard=N/3</code>; each shard authenticates
+  independently and runs roughly a third of the tests. Per-shard Allure artifacts are merged with
+  <code>download-artifact</code> (<code>pattern: allure-results-*</code>, <code>merge-multiple: true</code>)
+  into a single combined report.</p>
+
+  <h3>5.4 Allure Reporting — Module-Wise</h3>
+  <p>The merged Allure report is deployed to GitHub Pages and presents the run by module/suite, with
+  step-by-step histories, attached screenshots/video/traces on failure, and the accessibility &amp; visual
+  attachments described above.</p>
+  <div class="img-ph">📷 [Insert screenshot: Allure “Overview” — 139 tests, 100%]</div>
+  <div class="img-ph">📷 [Insert screenshot: Allure “Behaviors/Suites” module breakdown]</div>
+
+  <h3>5.5 Diagnostics &amp; Artifacts</h3>
+  <p>On any failure boundary the framework captures a screenshot, a video, and (on retry) a full Playwright
+  trace, all surfaced in Allure — satisfying the diagnostics requirement and making root-cause analysis fast.</p>
+</section>
+
+<!-- ============================ EXECUTION SUMMARY ============================ -->
+<section class="page-break">
+  <h2>9. Test Execution Summary</h2>
+  <div class="kpi">
+    <div><span class="n">139</span><span class="l">Total tests</span></div>
+    <div><span class="n">139</span><span class="l">Passed</span></div>
+    <div><span class="n">0</span><span class="l">Failed</span></div>
+    <div><span class="n">0</span><span class="l">Skipped</span></div>
+  </div>
+  <table>
+    <tr><th>Layer</th><th>Tests</th><th>Result</th></tr>
+    <tr><td>Authentication (setup + functional)</td><td>incl. in 124</td><td class="ok">Pass</td></tr>
+    <tr><td>Functional UI (8 services)</td><td>124</td><td class="ok">Pass</td></tr>
+    <tr><td>Network Interception &amp; Mocking</td><td>5</td><td class="ok">Pass</td></tr>
+    <tr><td>Accessibility (axe, WCAG 2 A/AA)</td><td>5</td><td class="ok">Pass (monitoring)</td></tr>
+    <tr><td>Visual / UI Checkpoints</td><td>5</td><td class="ok">Pass</td></tr>
+    <tr><th>Total</th><th>139</th><th class="ok">100%</th></tr>
+  </table>
+  <p class="small muted">Figures reflect the final green CI run on branch <code>main</code>. The live Allure
+  dashboard is published via GitHub Pages from the pipeline’s <code>report</code> job.</p>
+  <div class="img-ph">📷 [Insert screenshot: final Allure dashboard at 100%]</div>
+</section>
+
+<!-- ============================ CHALLENGES ============================ -->
+<section class="page-break">
+  <h2>10. Challenges &amp; Resolutions</h2>
+  <table>
+    <tr><th>Challenge</th><th>Resolution</th></tr>
+    <tr><td>Cloudflare bot-block on a self-hosted IP</td><td>GitHub-hosted runner + real Chrome run headed via xvfb so the JS challenge auto-solves.</td></tr>
+    <tr><td>Mass failures late in the run (session expiry)</td><td>3-way sharding + parallelism so each shard logs in fresh and finishes inside the token window.</td></tr>
+    <tr><td>Intermittent shard skips on login</td><td>Hardened the post-login wait (15s &rarr; 30s); tuned workers/retries.</td></tr>
+    <tr><td>Wrong assumptions about DOM (e.g., invoice number in an input, no &lt;footer&gt; tag, fields not auto-filled)</td><td>Inspected Allure failure ARIA snapshots/screenshots and corrected locators/assertions precisely.</td></tr>
+    <tr><td>Visual baselines unstable across CI environments</td><td>Capture + layout-integrity checkpoints; documented the pixel-diff upgrade path.</td></tr>
+    <tr><td>Third-party accessibility debt</td><td>Implemented a11y as a non-blocking monitoring layer that surfaces violations.</td></tr>
+    <tr><td>Genuine application bugs found</td><td>Documented as explicit tests (TC24, TC21) asserting current behaviour, flagged for future fix.</td></tr>
+  </table>
+</section>
+
+<!-- ============================ CONCLUSION ============================ -->
+<section class="page-break">
+  <h2>11. Conclusion</h2>
+  <p>This capstone delivers a complete, production-ready Playwright automation framework for the Toolshop
+  e-commerce platform. It implements a strict Page Object Model with dependency-injected fixtures, fully
+  externalised data, a multi-role authentication matrix, and failure-boundary diagnostics. Beyond functional
+  coverage of all eight services, it adds three advanced verification layers — network interception/mocking,
+  accessibility auditing, and visual checkpoints — and runs unattended in a sharded GitHub Actions pipeline
+  that publishes an Allure dashboard.</p>
+  <p>Critically, the project overcame a real-world Cloudflare bot-protection barrier and a short-lived-session
+  constraint through an evidence-driven sequence of infrastructure and design changes, arriving at a
+  <strong>stable 139-test suite at a 100% pass rate</strong>. The framework is maintainable, CI-ready, and
+  structured to extend cleanly as the application evolves.</p>
+
+  <h3>Deliverables Checklist</h3>
+  <table>
+    <tr><th>Deliverable</th><th>Status</th></tr>
+    <tr><td>Framework configuration (playwright.config.js)</td><td class="ok">Delivered</td></tr>
+    <tr><td>Page Object classes</td><td class="ok">Delivered</td></tr>
+    <tr><td>Parameterised, data-driven test suites (happy + edge)</td><td class="ok">Delivered</td></tr>
+    <tr><td>Mocking &amp; interception suite</td><td class="ok">Delivered</td></tr>
+    <tr><td>Accessibility &amp; visual verification layers</td><td class="ok">Delivered</td></tr>
+    <tr><td>Allure execution dashboard</td><td class="ok">Delivered</td></tr>
+    <tr><td>GitHub Actions CI pipeline</td><td class="ok">Delivered</td></tr>
+  </table>
+
+  <div style="margin-top:30pt;" class="band"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span></div>
+  <p style="text-align:center;margin-top:14pt;" class="muted">Prepared by <strong>Krishna Kumar Yadav</strong>
+  &mdash; Wipro Capstone Project, Playwright Batch 2 &mdash; June 2026</p>
+</section>
+
+</body>
+</html>
