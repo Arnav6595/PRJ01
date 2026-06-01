@@ -27,7 +27,17 @@ export default defineConfig({
 
   use: {
     baseURL:           process.env.BASE_URL || 'https://practicesoftwaretesting.com',
-    headless:          !!process.env.CI,
+    // Headed by default. Cloudflare aggressively challenges HEADLESS Chrome, so we run
+    // real headed Chrome on the self-hosted runner and let its JS challenge auto-solve.
+    // Set HEADLESS=true only if you explicitly need headless (expect Cloudflare blocks).
+    headless:          process.env.HEADLESS === 'true',
+    // Use real installed Chrome (not bundled Chromium) — applied to the `setup` project too,
+    // which is where the Cloudflare-protected login must be cleared.
+    channel:           'chrome',
+    // Remove the navigator.webdriver=true automation flag that Cloudflare checks.
+    launchOptions: {
+      args: ['--disable-blink-features=AutomationControlled'],
+    },
     actionTimeout:     15000,
     navigationTimeout: 20000,
     testIdAttribute:   'data-test',
@@ -45,7 +55,7 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        channel:      'chrome', 
+        // channel + launchOptions inherited from top-level `use`.
         storageState: STORAGE_STATE,
       },
       dependencies: ['setup'],

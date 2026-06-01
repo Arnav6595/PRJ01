@@ -39,9 +39,13 @@ jobs:
         run: npm ci
 
       - name: Install Chrome for Testing
-        run: npx playwright install chrome --with-deps
+        # --with-deps is Linux-only (apt-get); omitted for the Windows self-hosted runner.
+        run: npx playwright install chrome
 
       - name: Run Playwright Tests
+        # Runs HEADED (config defaults headed unless HEADLESS=true) so the Cloudflare JS
+        # challenge on practicesoftwaretesting.com can auto-solve. The self-hosted runner
+        # must run in an interactive desktop session, not as a Session-0 Windows service.
         run: npm run test:ci -- --project=chromium
         continue-on-error: true
 

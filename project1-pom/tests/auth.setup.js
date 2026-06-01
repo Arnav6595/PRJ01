@@ -4,14 +4,35 @@ import { test as setup, expect } from '@playwright/test';
 const customerAuthFile = 'playwright/.auth/user.json';
 const adminAuthFile    = 'playwright/.auth/admin.json';
 
+// Cloudflare protects practicesoftwaretesting.com and serves a "Just a moment..."
+// interstitial that runs a JS challenge. In real headed Chrome it auto-clears within
+// a few seconds; we just have to wait for the actual app (the login form) instead of
+// failing on a short timeout. If it never clears, throw a message that names the cause
+// so the failure isn't mistaken for a flaky locator.
+async function gotoLogin(page) {
+    await page.goto('/auth/login', { waitUntil: 'domcontentloaded' });
+
+    try {
+        // Longer timeout: allow the Cloudflare JS challenge to resolve before the form appears.
+        await page.getByTestId('email').waitFor({ state: 'visible', timeout: 30000 });
+    } catch (err) {
+        const title = await page.title().catch(() => '');
+        if (/just a moment|attention required|cloudflare|checking your browser/i.test(title)) {
+            throw new Error(
+                `Cloudflare challenge blocked the login page (page title: "${title}"). ` +
+                `Ensure tests run HEADED on the self-hosted runner (do not set HEADLESS=true) ` +
+                `so the JS challenge can auto-solve.`
+            );
+        }
+        throw new Error(`Login form did not load within 30s (page title: "${title}"). Original: ${err.message}`);
+    }
+}
+
 setup('Authenticate Customer', async ({ page }) => {
     const email    = process.env.CUSTOMER_EMAIL    || 'customer@practicesoftwaretesting.com';
     const password = process.env.CUSTOMER_PASSWORD || 'welcome01';
 
-    await page.goto('/auth/login');
-    
-    // Wait for Angular to bind the form before touching it
-    await page.getByTestId('email').waitFor({ state: 'visible', timeout: 15000 });
+    await gotoLogin(page);
 
     await page.getByTestId('email').fill(email);
     await page.getByTestId('password').fill(password);
@@ -27,10 +48,7 @@ setup('Authenticate Admin', async ({ page }) => {
     const email    = process.env.ADMIN_EMAIL    || 'admin@practicesoftwaretesting.com';
     const password = process.env.ADMIN_PASSWORD || 'welcome01';
 
-    await page.goto('/auth/login');
-    
-    // Wait for Angular to bind the form before touching it
-    await page.getByTestId('email').waitFor({ state: 'visible', timeout: 15000 });
+    await gotoLogin(page);
 
     await page.getByTestId('email').fill(email);
     await page.getByTestId('password').fill(password);
