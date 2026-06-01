@@ -54,6 +54,7 @@ test.describe('Service — Visual Regression / UI Checkpoints', () => {
     test('VIS_05 — Page footer renders with valid layout', async ({ homePage, page }, testInfo) => {
         await homePage.goTo();
         await homePage.productNames.first().waitFor({ state: 'visible', timeout: 15000 });
-        await checkpoint(page.locator('footer').first(), testInfo, 'footer.png');
+        // The site has no <footer> element; its footer is the "DEMO application" banner.
+        await checkpoint(page.getByText(/This is a DEMO application/i).first(), testInfo, 'footer.png');
     });
 });
