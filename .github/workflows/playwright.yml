@@ -36,10 +36,10 @@ jobs:
           cache-dependency-path: project1-pom/package-lock.json
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install Playwright Chromium Browser
-        run: npx playwright install chromium --with-deps
+      - name: Install Chrome for Testing
+        run: npx playwright install chrome --with-deps
 
       - name: Run Playwright Tests
         run: npm run test:ci -- --project=chromium
@@ -68,7 +68,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Java (Required for Allure)
+      - name: Setup Java (Required for Allure CLI)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -82,7 +82,7 @@ jobs:
           cache-dependency-path: project1-pom/package-lock.json
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Download Allure Raw Results
         uses: actions/download-artifact@v4
@@ -105,7 +105,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         if: always() && github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'master')
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages

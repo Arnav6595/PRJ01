@@ -1,30 +1,43 @@
-// tests/auth.setup.js
 import { test as setup, expect } from '@playwright/test';
 
-const authFile = 'playwright/.auth/user.json';
-const SITE_BASE = 'https://practicesoftwaretesting.com';
+// Relative paths — no __dirname, prevents OS-specific path drift
+const customerAuthFile = 'playwright/.auth/user.json';
+const adminAuthFile    = 'playwright/.auth/admin.json';
 
-setup('authenticate via UI to satisfy Angular state', async ({ page }) => {
-
+setup('Authenticate Customer', async ({ page }) => {
     const email    = process.env.CUSTOMER_EMAIL    || 'customer@practicesoftwaretesting.com';
     const password = process.env.CUSTOMER_PASSWORD || 'welcome01';
 
-    console.log(`Performing native UI Login for: ${email}`);
+    await page.goto('/auth/login');
+    
+    // Wait for Angular to bind the form before touching it
+    await page.getByTestId('email').waitFor({ state: 'visible', timeout: 15000 });
 
-    // 1. Go directly to the login page
-    await page.goto(`${SITE_BASE}/auth/login`);
-
-    // 2. Fill out the form exactly like a real user
     await page.getByTestId('email').fill(email);
     await page.getByTestId('password').fill(password);
     await page.getByTestId('login-submit').click();
 
-    // 3. Wait for the ultimate proof of login: The User Menu
-    const navMenu = page.getByTestId('nav-menu');
-    await expect(navMenu).toBeVisible({ timeout: 15000 });
+    // Proof of login before saving
+    await expect(page.getByTestId('nav-menu')).toBeVisible({ timeout: 15000 });
+    
+    await page.context().storageState({ path: customerAuthFile });
+});
 
-    // 4. Save this flawless, natively generated Angular state!
-    await page.context().storageState({ path: authFile });
+setup('Authenticate Admin', async ({ page }) => {
+    const email    = process.env.ADMIN_EMAIL    || 'admin@practicesoftwaretesting.com';
+    const password = process.env.ADMIN_PASSWORD || 'welcome01';
 
-    console.log(`✅ Native UI Session saved successfully to ${authFile}!`);
+    await page.goto('/auth/login');
+    
+    // Wait for Angular to bind the form before touching it
+    await page.getByTestId('email').waitFor({ state: 'visible', timeout: 15000 });
+
+    await page.getByTestId('email').fill(email);
+    await page.getByTestId('password').fill(password);
+    await page.getByTestId('login-submit').click();
+
+    // Admin accounts route directly to the dashboard upon login
+    await expect(page.getByTestId('page-title')).toContainText('Sales over the years', { timeout: 15000 });
+    
+    await page.context().storageState({ path: adminAuthFile });
 });

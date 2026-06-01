@@ -1,7 +1,7 @@
 [
   {
     "testName": "Valid Customer Account",
-    "email": "admin@practicesoftwaretesting.com",
+    "email": "customer@practicesoftwaretesting.com",
     "password": "welcome01"
   },
   {

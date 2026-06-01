@@ -54,6 +54,7 @@ export class AccountPage extends BasePage {
      * @returns {Promise<number>}
      */
     async getInvoiceCount() {
+        await this.invoiceRows.first().waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
         return await this.invoiceRows.count();
     }
 

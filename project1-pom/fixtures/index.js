@@ -7,6 +7,7 @@ import { ProfilePage }  from '../pages/ProfilePage.js';
 import { CheckoutPage } from '../pages/CheckoutPage.js';
 import { AccountPage }  from '../pages/AccountPage.js';
 import { ContactPage }  from '../pages/ContactPage.js';
+import { AdminPage } from '../pages/AdminPage.js';
 
 /**
  * @typedef {object} MyFixtures
@@ -18,6 +19,7 @@ import { ContactPage }  from '../pages/ContactPage.js';
  * @property {CheckoutPage} checkoutPage
  * @property {AccountPage}  accountPage
  * @property {ContactPage}  contactPage
+ * @property {AdminPage}      adminPage 
  */
 export const test = baseTest.extend({
     // Just instantiate the classes — let each test file handle its own navigation.
@@ -44,6 +46,9 @@ export const test = baseTest.extend({
     },
     accountPage: async ({ page }, use) => {
         await use(new AccountPage(page));
+    },
+    adminPage: async ({ page }, use) => {
+        await use(new AdminPage(page));
     },
 });
 

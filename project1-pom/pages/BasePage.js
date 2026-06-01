@@ -14,7 +14,7 @@ export class BasePage {
      * @param {string} path
      */
     async navigate(path) {
-        await this.page.goto(path);
+        await this.page.goto(path, { waitUntil: 'domcontentloaded' });
     }
 
     /**

@@ -1,65 +1,54 @@
-// playwright.config.js
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
-import path from 'path';
+// import path from 'path';
+// import { fileURLToPath } from 'url';
 
-// Load environment variables from .env file
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+// // ESM-safe __dirname — works reliably on Windows self-hosted AND Linux
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname  = path.dirname(__filename);
+
+dotenv.config();
+
+export const STORAGE_STATE = 'playwright/.auth/user.json';
 
 export default defineConfig({
-  timeout: 60000,
-  testDir: './tests',
-  fullyParallel: true, // You get your parallel workers back!
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ['allure-playwright'],
-    ['html', { outputFolder: 'playwright-report' }],
-    ['list']
-  ],
-  use: {
-    baseURL: process.env.BASE_URL || 'https://practicesoftwaretesting.com',
-    testIdAttribute: 'data-test',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+  timeout:       60000,
+  testDir:       './tests',
+  fullyParallel: true,
+  forbidOnly:    !!process.env.CI,
+  retries:       process.env.CI ? 2 : 0,
+  workers:       process.env.CI ? 1 : undefined,
 
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-    extraHTTPHeaders: {
-      'Accept-Language': 'en-US,en;q=0.9,en;q=0.8',
-    },
+  reporter: [
+    ['allure-playwright', { resultsDir: 'allure-results' }],
+    ['html',  { outputFolder: 'playwright-report' }],
+    ['list'],
+  ],
+
+  use: {
+    baseURL:           process.env.BASE_URL || 'https://practicesoftwaretesting.com',
+    headless:          !!process.env.CI,
+    actionTimeout:     15000,
+    navigationTimeout: 20000,
+    testIdAttribute:   'data-test',
+    trace:             'on-first-retry',
+    screenshot:        'only-on-failure',
+    video:             'retain-on-failure',
   },
+
   projects: [
-    // 1. Run the setup project first to grab the login session
     {
-      name: 'setup',
+      name:      'setup',
       testMatch: /.*\.setup\.js/,
     },
-    // 2. Main testing projects depend on setup and use the saved session
     {
       name: 'chromium',
-      use: { 
+      use: {
         ...devices['Desktop Chrome'],
-        storageState: 'playwright/.auth/user.json', 
+        channel:      'chrome', 
+        storageState: STORAGE_STATE,
       },
       dependencies: ['setup'],
-    }
-    // { 
-    //   name: 'firefox',  
-    //   use: { 
-    //     ...devices['Desktop Firefox'],
-    //     storageState: 'playwright/.auth/user.json',
-    //   },
-    //   dependencies: ['setup'],
-    // },
-    // { 
-    //   name: 'webkit',   
-    //   use: { 
-    //     ...devices['Desktop Safari'],
-    //     storageState: 'playwright/.auth/user.json',
-    //   },
-    //   dependencies: ['setup'],
-    // },
+    },
   ],
 });

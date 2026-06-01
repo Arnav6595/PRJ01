@@ -27,16 +27,22 @@ export class ContactPage extends BasePage {
         // ── Feedback Locators ─────────────────────────────────────────────────
         this.successAlert = page.locator('.alert-success');
         this.charError    = page.getByText('Message must be minimal 50 characters', { exact: false });
+        // Add this to the Feedback Locators section
+        this.messageRequiredError = page.getByText('Message is required');
     }
 
     /**
      * Navigate to contact page by clicking the nav link (required for Angular SPA routing).
      * Codegen confirmed: direct page.goto('/contact') skips Angular route guard init.
      */
+    // Replace your current goTo() with this to prevent the CI race condition
     async goTo() {
-        await this.navContactLink.click();
-        await this.page.waitForLoadState('networkidle');
-    }
+    await Promise.all([
+        this.page.waitForURL(/\/contact/, { timeout: 15000 }),
+        this.navContactLink.click(),
+    ]);
+    await this.subjectDropdown.waitFor({ state: 'visible', timeout: 10000 });
+   }
 
     /**
      * Submit form with subject and message (name/email are auto-filled when logged in)
