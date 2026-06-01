@@ -12,9 +12,10 @@
     "allure:open": "allure open allure-report"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
-    "allure-playwright": "^3.9.0",
     "allure-commandline": "^2.41.0",
+    "allure-playwright": "^3.9.0",
     "dotenv": "^17.4.2"
   }
 }
