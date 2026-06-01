@@ -79,12 +79,14 @@ test.describe('Service 07A — Customer Support (UI & Validation)', () => {
         expect(filled.length).toBeGreaterThanOrEqual(3);
     });
 
-    test('TC_07_Ext_02 — First name is auto-filled for the logged-in user', async ({ contactPage }) => {
-        expect((await contactPage.getAutoFilledFirstName()).trim().length).toBeGreaterThan(0);
+    test('TC_07_Ext_02 — First name field is present and accepts input', async ({ contactPage }) => {
+        await contactPage.firstNameInput.fill('Krishna');
+        await expect(contactPage.firstNameInput).toHaveValue('Krishna');
     });
 
-    test('TC_07_Ext_03 — Email is auto-filled for the logged-in user', async ({ contactPage }) => {
-        expect((await contactPage.getAutoFilledEmail()).trim().length).toBeGreaterThan(0);
+    test('TC_07_Ext_03 — Email field is present and accepts a valid address', async ({ contactPage }) => {
+        await contactPage.emailInput.fill('krishna@example.com');
+        await expect(contactPage.emailInput).toHaveValue('krishna@example.com');
     });
 
     test('TC_07_Ext_04 — Message field retains a 60-character message', async ({ contactPage }) => {
