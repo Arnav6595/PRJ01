@@ -23,14 +23,6 @@ export default defineConfig({
   retries:       process.env.CI ? 2 : 0,
   workers:       process.env.CI ? 2 : undefined,
 
-  // Visual regression: seed missing baselines on first run, compare thereafter.
-  updateSnapshots: 'missing',
-
-  expect: {
-    // Absorb sub-pixel rendering noise so only real layout shifts fail.
-    toHaveScreenshot: { maxDiffPixelRatio: 0.1, animations: 'disabled' },
-  },
-
   reporter: [
     ['allure-playwright', { resultsDir: 'allure-results' }],
     ['html',  { outputFolder: 'playwright-report' }],
