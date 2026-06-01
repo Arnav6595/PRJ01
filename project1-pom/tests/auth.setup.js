@@ -20,7 +20,7 @@ async function gotoLogin(page) {
         if (/just a moment|attention required|cloudflare|checking your browser/i.test(title)) {
             throw new Error(
                 `Cloudflare challenge blocked the login page (page title: "${title}"). ` +
-                `Ensure tests run HEADED on the self-hosted runner (do not set HEADLESS=true) ` +
+                `Ensure tests run HEADED (do not set HEADLESS=true; on Linux CI run via xvfb) ` +
                 `so the JS challenge can auto-solve.`
             );
         }

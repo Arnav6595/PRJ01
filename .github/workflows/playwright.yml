@@ -16,7 +16,7 @@ permissions:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     env:
       CI: true
 
@@ -39,14 +39,14 @@ jobs:
         run: npm ci
 
       - name: Install Chrome for Testing
-        # --with-deps is Linux-only (apt-get); omitted for the Windows self-hosted runner.
-        run: npx playwright install chrome
+        # --with-deps installs the system libraries Chrome needs on the Linux runner.
+        run: npx playwright install chrome --with-deps
 
       - name: Run Playwright Tests
-        # Runs HEADED (config defaults headed unless HEADLESS=true) so the Cloudflare JS
-        # challenge on practicesoftwaretesting.com can auto-solve. The self-hosted runner
-        # must run in an interactive desktop session, not as a Session-0 Windows service.
-        run: npm run test:ci -- --project=chromium
+        # GitHub-hosted Linux runners have no display, so wrap with xvfb to run HEADED
+        # (config defaults headed unless HEADLESS=true). Headed real Chrome gives the best
+        # chance of passing the Cloudflare JS challenge on practicesoftwaretesting.com.
+        run: xvfb-run -a npm run test:ci -- --project=chromium
         continue-on-error: true
 
       - name: Upload Allure Raw Results
