@@ -38,9 +38,10 @@ setup('Authenticate Customer', async ({ page }) => {
     await page.getByTestId('password').fill(password);
     await page.getByTestId('login-submit').click();
 
-    // Proof of login before saving
-    await expect(page.getByTestId('nav-menu')).toBeVisible({ timeout: 15000 });
-    
+    // Proof of login before saving. 30s: 3 shards authenticate at once, so the demo's
+    // login API can be slow under that burst — a tight timeout caused transient skips.
+    await expect(page.getByTestId('nav-menu')).toBeVisible({ timeout: 30000 });
+
     await page.context().storageState({ path: customerAuthFile });
 });
 
@@ -54,8 +55,8 @@ setup('Authenticate Admin', async ({ page }) => {
     await page.getByTestId('password').fill(password);
     await page.getByTestId('login-submit').click();
 
-    // Admin accounts route directly to the dashboard upon login
-    await expect(page.getByTestId('page-title')).toContainText('Sales over the years', { timeout: 15000 });
-    
+    // Admin accounts route directly to the dashboard upon login (30s — see customer note).
+    await expect(page.getByTestId('page-title')).toContainText('Sales over the years', { timeout: 30000 });
+
     await page.context().storageState({ path: adminAuthFile });
 });
