@@ -17,6 +17,13 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      # Split the suite across 3 parallel machines. Each shard gets its own runner (and IP),
+      # runs setup/login fresh, and finishes a third of the tests — well inside the demo
+      # site's short auth-session window. fail-fast:false keeps the other shards going if one fails.
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     env:
       CI: true
 
@@ -42,18 +49,20 @@ jobs:
         # --with-deps installs the system libraries Chrome needs on the Linux runner.
         run: npx playwright install chrome --with-deps
 
-      - name: Run Playwright Tests
+      - name: Run Playwright Tests (shard ${{ matrix.shard }}/3)
         # GitHub-hosted Linux runners have no display, so wrap with xvfb to run HEADED
         # (config defaults headed unless HEADLESS=true). Headed real Chrome gives the best
         # chance of passing the Cloudflare JS challenge on practicesoftwaretesting.com.
-        run: xvfb-run -a npm run test:ci -- --project=chromium
+        # --shard runs only this machine's slice of the chromium tests.
+        run: xvfb-run -a npm run test:ci -- --project=chromium --shard=${{ matrix.shard }}/3
         continue-on-error: true
 
       - name: Upload Allure Raw Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
+          # Unique name per shard — v4 artifacts must have distinct names; the report job merges them.
+          name: allure-results-${{ matrix.shard }}
           path: project1-pom/allure-results
           if-no-files-found: warn
           retention-days: 14
@@ -88,11 +97,13 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Download Allure Raw Results
+      - name: Download Allure Raw Results (all shards)
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
+          # Pull every shard's results and merge them into one folder for a combined report.
+          pattern: allure-results-*
           path: project1-pom/allure-results
+          merge-multiple: true
 
       - name: Generate Allure Report
         run: npm run allure:generate
