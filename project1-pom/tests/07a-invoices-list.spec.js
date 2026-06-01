@@ -58,4 +58,35 @@ test.describe('Service 08A — Invoices & Account Management (Navigation & List)
         const id = await accountPage.getFirstInvoiceId();
         expect(id?.trim()).toMatch(/INV-/);
     });
+
+    // =====================================================================
+    // NEW TEST CASES (added 2026-06-01) — 5 functional tests (Service 7: Invoices)
+    // =====================================================================
+    test('TC_08_Ext_01 — Navigating to invoices lands on the invoices page', async ({ accountPage }) => {
+        await accountPage.navigateToInvoices();
+        await expect(accountPage.page).toHaveURL(/\/account\/invoices/, { timeout: 15000 });
+    });
+
+    test('TC_08_Ext_02 — Invoice list shows at least one record', async ({ accountPage }) => {
+        await accountPage.navigateToInvoices();
+        expect(await accountPage.getInvoiceCount()).toBeGreaterThanOrEqual(1);
+    });
+
+    test('TC_08_Ext_03 — First invoice row exposes a visible Details button', async ({ accountPage }) => {
+        await accountPage.navigateToInvoices();
+        await expect(accountPage.detailsButton).toBeVisible();
+    });
+
+    test('TC_08_Ext_04 — First invoice row shows an INV- prefixed id', async ({ accountPage }) => {
+        await accountPage.navigateToInvoices();
+        const id = await accountPage.getFirstInvoiceId();
+        expect(id?.trim()).toMatch(/INV-/);
+    });
+
+    test('TC_08_Ext_05 — Details button count equals the number of invoice rows', async ({ accountPage }) => {
+        await accountPage.navigateToInvoices();
+        const rows = await accountPage.getInvoiceCount();
+        const buttons = await accountPage.allDetailsButtons.count();
+        expect(buttons).toBe(rows);
+    });
 });

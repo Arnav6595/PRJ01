@@ -63,4 +63,35 @@ test.describe('Service 4 - User Profile & Navigation (Logged-In)', () => {
         await expect(profilePage.lastNameInput).toHaveValue(newProfile.lastName);
     });
 
+    // =====================================================================
+    // NEW TEST CASES (added 2026-06-01) — 5 functional tests (Service 4: Profile)
+    // =====================================================================
+    test('TC_Nav_Ext_01 — User menu reveals the "My account" link', async ({ page }) => {
+        await page.getByTestId('nav-menu').click();
+        await expect(page.getByTestId('nav-my-account')).toBeVisible();
+    });
+
+    test('TC_Nav_Ext_02 — Profile navigation lands on the profile page', async ({ page }) => {
+        await page.getByTestId('nav-menu').click();
+        await page.getByText(/Profile/i).click();
+        await expect(page).toHaveURL(/.*profile/, { timeout: 15000 });
+    });
+
+    test('TC_Nav_Ext_03 — Profile first-name field is pre-populated from the account', async ({ profilePage, page }) => {
+        await page.getByTestId('nav-menu').click();
+        await page.getByText(/Profile/i).click();
+        await expect(profilePage.firstNameInput).not.toBeEmpty({ timeout: 10000 });
+    });
+
+    test('TC_Nav_Ext_04 — Profile email field is pre-populated from the account', async ({ profilePage, page }) => {
+        await page.getByTestId('nav-menu').click();
+        await page.getByText(/Profile/i).click();
+        await expect(profilePage.emailInput).not.toBeEmpty({ timeout: 10000 });
+    });
+
+    test('TC_Nav_Ext_05 — User menu exposes a Sign out option', async ({ page }) => {
+        await page.getByTestId('nav-menu').click();
+        await expect(page.getByTestId('nav-sign-out')).toBeVisible();
+    });
+
 });

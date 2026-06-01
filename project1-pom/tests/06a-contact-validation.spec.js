@@ -70,4 +70,34 @@ test.describe('Service 07A — Customer Support (UI & Validation)', () => {
         await contactPage.submitButton.click();
         await expect(contactPage.charError).toBeVisible();
     });
+
+    // =====================================================================
+    // NEW TEST CASES (added 2026-06-01) — 5 functional tests (Service 6: Contact)
+    // =====================================================================
+    test('TC_07_Ext_01 — Subject dropdown exposes 3 or more selectable options', async ({ contactPage }) => {
+        const filled = (await contactPage.getSubjectOptions()).filter(o => o.trim().length > 0);
+        expect(filled.length).toBeGreaterThanOrEqual(3);
+    });
+
+    test('TC_07_Ext_02 — First name is auto-filled for the logged-in user', async ({ contactPage }) => {
+        expect((await contactPage.getAutoFilledFirstName()).trim().length).toBeGreaterThan(0);
+    });
+
+    test('TC_07_Ext_03 — Email is auto-filled for the logged-in user', async ({ contactPage }) => {
+        expect((await contactPage.getAutoFilledEmail()).trim().length).toBeGreaterThan(0);
+    });
+
+    test('TC_07_Ext_04 — Message field retains a 60-character message', async ({ contactPage }) => {
+        const msg = 'A'.repeat(60);
+        await contactPage.messageInput.fill(msg);
+        await expect(contactPage.messageInput).toHaveValue(msg);
+    });
+
+    test('TC_07_Ext_05 — Submitting a valid subject and message shows a success confirmation', async ({ contactPage }) => {
+        await contactPage.submitContactForm(
+            'customer-service',
+            'This is a valid automated test message exceeding the fifty character minimum requirement.'
+        );
+        await expect(contactPage.successAlert).toBeVisible({ timeout: 15000 });
+    });
 });

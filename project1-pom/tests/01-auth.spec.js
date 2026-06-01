@@ -81,3 +81,44 @@ test.describe('Service 01 — Authentication / Registration', () => {
         });
     });
 });
+
+// =====================================================================
+// NEW TEST CASES (added 2026-06-01) — 5 functional tests (Service 1: Auth)
+// =====================================================================
+test.describe('Service 01 — Authentication (Extended)', () => {
+
+    // Always start fully logged out
+    test.use({ storageState: { cookies: [], origins: [] } });
+
+    test.beforeEach(async ({ loginPage, page }) => {
+        await loginPage.goTo();
+        await page.getByTestId('email').waitFor({ state: 'visible', timeout: 15000 });
+    });
+
+    test('TC_Login_Ext_01 — Login form renders email, password, and submit controls', async ({ loginPage }) => {
+        await expect(loginPage.emailInput).toBeVisible();
+        await expect(loginPage.passwordInput).toBeVisible();
+        await expect(loginPage.loginButton).toBeVisible();
+    });
+
+    test('TC_Login_Ext_02 — Invalid credentials show an authentication error', async ({ loginPage, page }) => {
+        await loginPage.login('customer@practicesoftwaretesting.com', 'definitelyWrong123');
+        await expect(page.getByText(/Invalid email or password/i)).toBeVisible({ timeout: 15000 });
+    });
+
+    test('TC_Login_Ext_03 — Password field masks its input', async ({ loginPage }) => {
+        await expect(loginPage.passwordInput).toHaveAttribute('type', 'password');
+    });
+
+    test('TC_Login_Ext_04 — Registration page renders first name and email fields', async ({ registerPage, page }) => {
+        await registerPage.goTo();
+        await expect(page.getByTestId('first-name')).toBeVisible({ timeout: 15000 });
+        await expect(page.getByTestId('email')).toBeVisible();
+    });
+
+    test('TC_Login_Ext_05 — Valid customer login lands on the account area', async ({ loginPage, page }) => {
+        await loginPage.login('customer@practicesoftwaretesting.com', 'welcome01');
+        await expect(page).toHaveURL(/.*account/, { timeout: 15000 });
+        await expect(page.getByTestId('nav-menu')).toBeVisible();
+    });
+});

@@ -70,10 +70,42 @@ test.describe('Service 08 — Admin Dashboard & Navigation', () => {
    test('TC_Admin_11 — Admin can navigate to Reports > Average sales per month', async ({ adminPage }) => {
     await adminPage.openReportsDropdown();
 
-    
+
     await adminPage.averageMonthLink.click();
 
     await expect(adminPage.page).toHaveURL(/\/admin\/reports\/average-sales-per-month/);
 });
+
+    // =====================================================================
+    // NEW TEST CASES (added 2026-06-01) — 5 functional tests (Service 8: Admin)
+    // =====================================================================
+    test('TC_Admin_Ext_01 — Admin menu exposes Brands, Products, and Users links', async ({ adminPage }) => {
+        await expect(adminPage.brandsLink).toBeVisible();
+        await expect(adminPage.productsLink).toBeVisible();
+        await expect(adminPage.usersLink).toBeVisible();
+    });
+
+    test('TC_Admin_Ext_02 — Reports dropdown reveals Statistics and weekly-sales links', async ({ adminPage }) => {
+        await adminPage.openReportsDropdown();
+        await expect(adminPage.statisticsLink).toBeVisible();
+        await expect(adminPage.averageWeekLink).toBeVisible();
+    });
+
+    test('TC_Admin_Ext_03 — Products admin page shows a populated data table', async ({ adminPage, page }) => {
+        await adminPage.productsLink.click();
+        await expect(page).toHaveURL(/\/admin\/products/, { timeout: 15000 });
+        await expect(page.locator('table tbody tr').first()).toBeVisible({ timeout: 15000 });
+    });
+
+    test('TC_Admin_Ext_04 — Categories admin page shows the Add control', async ({ adminPage }) => {
+        await adminPage.categoriesLink.click();
+        await expect(adminPage.page).toHaveURL(/\/admin\/categories/, { timeout: 15000 });
+        await expect(adminPage.addCategoryBtn).toBeVisible();
+    });
+
+    test('TC_Admin_Ext_05 — Admin dashboard displays the "Sales over the years" title', async ({ adminPage }) => {
+        await adminPage.dashboardLink.click();
+        await expect(adminPage.pageTitle).toContainText('Sales over the years', { timeout: 15000 });
+    });
 
 });
