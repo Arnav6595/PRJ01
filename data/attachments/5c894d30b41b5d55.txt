@@ -1,0 +1,1 @@
+[a11y:register] total=2 byImpact={"critical":1,"serious":1}
