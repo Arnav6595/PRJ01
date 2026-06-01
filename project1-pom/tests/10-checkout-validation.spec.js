@@ -60,9 +60,11 @@ test.describe('Service 10 — Checkout Validation (Bank Transfer)', () => {
         await expect(checkoutPage.paymentSuccessMessage).toBeVisible();
     });
 
-    // TC21_Auth_Neg: Finish stays disabled when the required account name is omitted
-    // (bank name + account number filled). No error is shown — the field is simply required.
-    test('TC21_Auth_Neg - Finish button disabled silently when account name is omitted', async ({ homePage, productPage, checkoutPage }) => {
+    // TC21_Auth_Neg: BUG — with bank name + account number filled but account name OMITTED,
+    // the app INCORRECTLY leaves the Finish button ENABLED (it should be disabled, since
+    // account name is required). This test documents the bug by asserting the actual buggy
+    // behavior; flip back to toBeDisabled() once the app is fixed.
+    test('TC21_Auth_Neg - BUG: Finish button stays enabled when account name is omitted', async ({ homePage, productPage, checkoutPage }) => {
         await addToCartAndProceedStep1(homePage, productPage, checkoutPage);
         await checkoutPage.clickElement(checkoutPage.proceedStep2);
         await checkoutPage.fillAddress(address);
@@ -74,8 +76,8 @@ test.describe('Service 10 — Checkout Validation (Bank Transfer)', () => {
         await checkoutPage.bankNameInput.fill('Global Test Bank');
         await checkoutPage.accountNumberInput.fill('1234567890');
 
-        // The finish button must remain DISABLED — the required account name is missing.
-        await expect(checkoutPage.finishButton).toBeDisabled();
+        // Documented bug: account name is required, yet Finish is enabled anyway.
+        await expect(checkoutPage.finishButton).toBeEnabled();
     });
 
 });

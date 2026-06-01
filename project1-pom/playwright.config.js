@@ -16,12 +16,12 @@ export default defineConfig({
   testDir:       './tests',
   fullyParallel: true,
   forbidOnly:    !!process.env.CI,
-  // Keep total wall-clock short: the practicesoftwaretesting.com demo issues short-lived
-  // auth tokens and periodically resets its DB, so a long serial run (47 min) outlives the
-  // session captured at setup → later login-dependent specs fail. Parallelism finishes the
-  // suite inside the session window; 1 retry stops failing tests from tripling the runtime.
-  retries:       process.env.CI ? 1 : 0,
-  workers:       process.env.CI ? 4 : undefined,
+  // Sharding (3 machines in CI) already keeps wall-clock short and beats the demo's
+  // short-lived auth session. Within each shard, 2 workers is enough parallelism without
+  // hammering the shared public demo — 4 caused list/alert render timeouts on admin and
+  // contact tests. 2 retries absorbs the demo's transient flakiness under load.
+  retries:       process.env.CI ? 2 : 0,
+  workers:       process.env.CI ? 2 : undefined,
 
   reporter: [
     ['allure-playwright', { resultsDir: 'allure-results' }],
