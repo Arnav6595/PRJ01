@@ -142,8 +142,11 @@ test.describe('Service 5B - Checkout Suite (Logged-In)', () => {
         await checkoutPage.bankNameInput.fill('Test Bank');
         await checkoutPage.bankNameInput.fill('');
 
-        // 2. Click into the empty account name field — do NOT type anything
-        await checkoutPage.accountNameInput.click();
+        // 2. Dirty the account name field (type then clear) so its validator engages.
+        // The app only surfaces these errors once a field has been modified — exactly
+        // like the bank name above. A plain focus+blur with no input shows nothing.
+        await checkoutPage.accountNameInput.fill('x');
+        await checkoutPage.accountNameInput.fill('');
 
         // 3. Blurring the bank name (via step 2 above) triggers its validation error
         await expect(checkoutPage.page.getByText('Bank name can only contain letters and spaces.')).toBeVisible();

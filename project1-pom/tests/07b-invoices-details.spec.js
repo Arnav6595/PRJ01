@@ -40,8 +40,8 @@ test.describe('Service 08B — Invoices & Account Management (Details & PDF)', (
         await accountPage.navigateToInvoices();
         await accountPage.openFirstInvoiceDetails();
         await expect(accountPage.invoiceIdCell).toBeVisible({ timeout: 8000 });
-        const id = await accountPage.invoiceIdCell.textContent();
-        expect(id?.trim()).toMatch(/INV-/);
+        // Invoice Number is a readonly input — assert its value, not text content.
+        await expect(accountPage.invoiceIdCell).toHaveValue(/INV-/);
     });
 
     test('TC_08_13 — "Download PDF" button is visible on the invoice detail page', async ({ accountPage }) => {

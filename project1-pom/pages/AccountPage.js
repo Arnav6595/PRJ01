@@ -26,9 +26,10 @@ export class AccountPage extends BasePage {
         // ── Invoice Detail Page ───────────────────────────────────────────────
         // The PDF download button — data-test="download-invoice"
         this.downloadPdfButton  = page.getByTestId('download-invoice');
-        // The INV- prefixed invoice reference. Not restricted to <td>: on the detail page
-        // the invoice number may render in a heading/div, so match it anywhere on the page.
-        this.invoiceIdCell = page.getByText(/INV-/).first();
+        // The INV- prefixed invoice reference. On the detail page it's a readonly INPUT
+        // ("Invoice Number" textbox), so its value isn't matchable via getByText — target
+        // the textbox and assert its value instead.
+        this.invoiceIdCell = page.getByRole('textbox', { name: 'Invoice Number' });
     }
 
     // ── Navigation Helpers ────────────────────────────────────────────────────
@@ -60,10 +61,10 @@ export class AccountPage extends BasePage {
     }
 
     /**
-     * Returns text of the INV- cell from the first invoice row
-     * @returns {Promise<string|null>}
+     * Returns the invoice reference value from the "Invoice Number" textbox
+     * @returns {Promise<string>}
      */
     async getFirstInvoiceId() {
-        return await this.invoiceIdCell.textContent();
+        return await this.invoiceIdCell.inputValue();
     }
 }
