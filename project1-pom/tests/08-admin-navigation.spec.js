@@ -64,7 +64,7 @@ test.describe('Service 08 — Admin Dashboard & Navigation', () => {
 
     test('TC_Admin_10 — Admin can navigate to Reports > Average sales per week', async ({ adminPage }) => {
         await adminPage.openReportsDropdown();
-        await adminPage.averageSalesLink.click();
+        await adminPage.averageWeekLink.click();
         await expect(adminPage.page).toHaveURL(/\/admin\/reports\/average-sales-per-week/);
     });
    test('TC_Admin_11 — Admin can navigate to Reports > Average sales per month', async ({ adminPage }) => {

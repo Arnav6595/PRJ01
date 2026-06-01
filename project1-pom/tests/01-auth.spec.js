@@ -52,8 +52,19 @@ test.describe('Service 01 — Authentication / Registration', () => {
             
             await page.getByTestId('first-name').waitFor({ state: 'visible', timeout: 10000 });
 
+            // The demo site persists registered users, so a static email only succeeds the
+            // first time. Make the email unique per run (and per parallel worker) so a
+            // "valid registration" actually registers a NEW user and redirects to login.
+            const uniqueUserData = {
+                ...scenario.userData,
+                email: scenario.userData.email.replace(
+                    /@/,
+                    `.${Date.now()}${Math.floor(Math.random() * 1000)}@`
+                ),
+            };
+
             await test.step('Fill out registration form', async () => {
-                await registerPage.registerUser(scenario.userData);
+                await registerPage.registerUser(uniqueUserData);
             });
 
             await test.step('Validate outcome', async () => {
